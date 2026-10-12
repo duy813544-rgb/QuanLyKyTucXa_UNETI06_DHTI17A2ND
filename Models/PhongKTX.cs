@@ -1,9 +1,6 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
 using System.ComponentModel.DataAnnotations;
-
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 namespace DoAnNhom06.Models;
-
 /// <summary>Entity PhongKTX theo đề. Số chỗ còn KHÔNG lưu: tính từ sức chứa và số PhanPhong đang ở.</summary>
 public partial class PhongKTX
 {
@@ -41,7 +38,8 @@ public partial class PhongKTX
     [DataType(DataType.MultilineText)]
     public string? MoTa { get; set; }
 
-    public virtual LoaiPhong LoaiPhong { get; set; } = null!;
+    [System.ComponentModel.DataAnnotations.Schema.ForeignKey(nameof(MaLoaiPhong))]
+    public virtual LoaiPhong? LoaiPhong { get; set; }
 
     public virtual ICollection<PhanPhong> PhanPhongs { get; set; } = new List<PhanPhong>();
 }

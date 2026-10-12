@@ -1,9 +1,5 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
 using System.ComponentModel.DataAnnotations;
-
 namespace DoAnNhom06.Models;
-
 /// <summary>Một dòng phòng kèm số người đang ở (tính bằng LINQ từ PhanPhong). SoChoCon là giá trị tính, không lưu.</summary>
 public class PhongRow
 {

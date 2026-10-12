@@ -1,9 +1,5 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
 using System.ComponentModel.DataAnnotations;
-
 namespace DoAnNhom06.Models;
-
 /// <summary>Entity LoaiPhong theo đề. Sức chứa của phòng lấy từ SoNguoiToiDa.</summary>
 public partial class LoaiPhong
 {
