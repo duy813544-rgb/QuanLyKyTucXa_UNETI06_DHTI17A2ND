@@ -1,0 +1,54 @@
+@model DangKyKTX
+@{
+    ViewData["Title"] = "Đăng ký #" + Model.MaDangKy;
+    var laAdmin = (string?)ViewBag.UserRole == VaiTro.Admin;
+}
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">ĐĂNG KÝ KTX</span><h1>Đơn #@Model.MaDangKy · @Nhan.NhanDangKy(Model.TrangThai)</h1><p class="muted">@Model.SinhVien.HoTen · @Model.MaSinhVien</p></div>
+    <a class="button secondary" asp-action="Index">← Quay lại</a>
+</div>
+<div class="stats">
+    <div class="stat"><span>Ngày đăng ký</span><strong>@Model.NgayDangKy.ToString("dd/MM/yyyy")</strong><small>Do hệ thống ghi nhận</small></div>
+    <div class="stat"><span>Thời gian ở dự kiến</span><strong>@Model.NgayBatDau.ToString("dd/MM/yyyy")</strong><small>đến @Model.NgayKetThucDuKien.ToString("dd/MM/yyyy")</small></div>
+    <div class="stat"><span>Nguyện vọng</span><strong>@(Model.NguyenVong?.TenLoaiPhong ?? "Không có")</strong><small>Chỉ mang tính tham khảo</small></div>
+    <div class="stat"><span>Ghi chú</span><strong style="font-size:16px">@(string.IsNullOrWhiteSpace(Model.GhiChu) ? "—" : Model.GhiChu)</strong></div>
+</div>
+
+@if (Model.TrangThai == TrangThaiDangKy.ChoDuyet)
+{
+    <div class="quick-links" style="margin:16px 0">
+        @if (laAdmin)
+        {
+            <a class="button primary" asp-controller="PhanPhong" asp-action="Assign" asp-route-maDangKy="@Model.MaDangKy">Phân phòng</a>
+            <form asp-action="Reject" asp-route-id="@Model.MaDangKy" method="post" onsubmit="return confirm('Từ chối đơn này?')">
+                <button class="button secondary" type="submit">Từ chối đơn</button>
+            </form>
+        }
+        else
+        {
+            <form asp-action="Cancel" asp-route-id="@Model.MaDangKy" method="post" onsubmit="return confirm('Hủy đơn này?')">
+                <button class="button secondary" type="submit">Hủy đơn</button>
+            </form>
+        }
+    </div>
+}
+
+<div class="section-heading" style="margin-top:20px"><div><h2>Lịch sử phòng của đơn này</h2></div></div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>PHÒNG</th><th>LOẠI · TÒA · TẦNG</th><th>NGÀY VÀO</th><th>NGÀY RA</th><th>TRẠNG THÁI</th></tr></thead>
+        <tbody>
+        @if (!Model.PhanPhongs.Any()) { <tr><td colspan="5" class="empty">Đơn này chưa được phân phòng.</td></tr> }
+        @foreach (var pp in Model.PhanPhongs.OrderBy(x => x.NgayVao))
+        {
+            <tr>
+                <td>@pp.PhongKTX.TenPhong</td>
+                <td>@pp.PhongKTX.LoaiPhong.TenLoaiPhong · @pp.PhongKTX.ToaNha · Tầng @pp.PhongKTX.Tang</td>
+                <td>@pp.NgayVao.ToString("dd/MM/yyyy")</td>
+                <td>@(pp.NgayRa?.ToString("dd/MM/yyyy") ?? "—")</td>
+                <td><span class="badge @(pp.TrangThai == TrangThaiPhanPhong.DangO ? "success" : "blue")">@Nhan.NhanPhanPhong(pp.TrangThai)</span></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

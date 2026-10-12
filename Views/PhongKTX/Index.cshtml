@@ -1,0 +1,88 @@
+@model PhongDanhSachViewModel
+@{ ViewData["Title"] = "Danh sách phòng KTX"; }
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">MODULE 2 · PHÒNG KÝ TÚC XÁ</span><h1>Danh sách phòng</h1><p class="muted">Số chỗ còn = sức chứa loại phòng − số sinh viên đang ở. Không nhập tay.</p></div>
+    @if (Model.LaAdmin) { <a class="button primary" asp-action="Create">＋ Thêm phòng</a> }
+</div>
+
+<form method="get" class="filter-card">
+    <div class="search-row">
+        <input name="q" value="@Model.Q" placeholder="Tìm theo tên phòng, ví dụ: A101"/>
+    </div>
+    <div class="filter-grid">
+        <div><label>Tòa nhà</label>
+            <select name="toa"><option value="">Tất cả</option>
+                @foreach (var t in Model.ToaNhas) { <option value="@t" selected="@(Model.ToaNha == t)">@t</option> }
+            </select></div>
+        <div><label>Loại phòng</label>
+            <select name="loai"><option value="">Tất cả</option>
+                @foreach (var lp in Model.LoaiPhongs) { <option value="@lp.MaLoaiPhong" selected="@(Model.MaLoaiPhong == lp.MaLoaiPhong)">@lp.TenLoaiPhong</option> }
+            </select></div>
+        <div><label>Tầng</label><input name="tang" type="number" min="1" value="@Model.Tang"/></div>
+        <div><label>Giới tính phòng</label>
+            <select name="gioitinh"><option value="">Tất cả</option>
+                <option value="Nam" selected="@(Model.GioiTinhPhong == "Nam")">Nam</option>
+                <option value="Nữ" selected="@(Model.GioiTinhPhong == "Nữ")">Nữ</option>
+            </select></div>
+        @if (Model.LaAdmin)
+        {
+            <div><label>Trạng thái</label>
+                <select name="trangthai"><option value="">Tất cả</option>
+                    <option value="DangSuDung" selected="@(Model.TrangThai == "DangSuDung")">Đang sử dụng</option>
+                    <option value="TamNgung" selected="@(Model.TrangThai == "TamNgung")">Tạm ngừng</option>
+                </select></div>
+        }
+        <div><label>Còn chỗ / hết chỗ</label>
+            <select name="concho"><option value="">Tất cả</option>
+                <option value="con" selected="@(Model.ConCho == "con")">Còn chỗ</option>
+                <option value="het" selected="@(Model.ConCho == "het")">Hết chỗ</option>
+            </select></div>
+        <div><label>Sắp xếp</label>
+            <select name="sort">
+                <option value="ten_asc" selected="@(Model.Sort == "ten_asc")">Tên phòng A → Z</option>
+                <option value="ten_desc" selected="@(Model.Sort == "ten_desc")">Tên phòng Z → A</option>
+                <option value="tang_asc" selected="@(Model.Sort == "tang_asc")">Tầng tăng dần</option>
+                <option value="tang_desc" selected="@(Model.Sort == "tang_desc")">Tầng giảm dần</option>
+                <option value="cho_asc" selected="@(Model.Sort == "cho_asc")">Số chỗ còn tăng dần</option>
+                <option value="cho_desc" selected="@(Model.Sort == "cho_desc")">Số chỗ còn giảm dần</option>
+            </select></div>
+    </div>
+    <div style="margin-top:14px"><button class="button primary filter-submit" type="submit">Tìm / lọc / sắp xếp</button></div>
+</form>
+
+<div class="table-card">
+    <table>
+        <thead><tr><th>PHÒNG</th><th>LOẠI PHÒNG</th><th>TÒA · TẦNG</th><th>GIỚI TÍNH</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TRẠNG THÁI</th><th></th></tr></thead>
+        <tbody>
+        @if (!Model.Items.Any())
+        {
+            <tr><td colspan="9" class="empty">Không có phòng phù hợp với điều kiện tìm kiếm.</td></tr>
+        }
+        @foreach (var p in Model.Items)
+        {
+            <tr>
+                <td><b>@p.TenPhong</b></td>
+                <td>@p.TenLoaiPhong<span class="cell-sub">@p.DonGiaThang.ToString("N0") ₫/tháng</span></td>
+                <td>@p.ToaNha · Tầng @p.Tang</td>
+                <td>@p.GioiTinhPhong</td>
+                <td>@p.SucChua</td>
+                <td>@p.SoNguoiDangO</td>
+                <td><span class="badge @(p.SoChoCon > 0 ? "success" : "danger")">@(p.SoChoCon > 0 ? $"Còn {p.SoChoCon}" : "Hết chỗ")</span></td>
+                <td><span class="badge @(p.TrangThai == TrangThaiPhong.DangSuDung ? "blue" : "pending")">@Nhan.NhanPhong(p.TrangThai)</span></td>
+                <td><a class="table-action" asp-action="Details" asp-route-id="@p.MaPhong">Chi tiết</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <nav class="pagination" aria-label="Phân trang">
+        <span class="muted">Tổng @Model.TotalCount phòng · trang @Model.Page / @Model.TotalPages</span>
+        <div>
+            @if (Model.Page > 1) { <a class="table-action" asp-action="Index" asp-all-route-data="@Model.RouteFor(Model.Page - 1)">← Trước</a> }
+            @if (Model.Page < Model.TotalPages) { <a class="table-action" asp-action="Index" asp-all-route-data="@Model.RouteFor(Model.Page + 1)">Sau →</a> }
+        </div>
+    </nav>
+}

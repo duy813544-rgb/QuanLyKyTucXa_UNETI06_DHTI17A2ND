@@ -1,0 +1,29 @@
+@model DangKyKTXCreateViewModel
+@{
+    ViewData["Title"] = "Đăng ký ở ký túc xá";
+    var loaiPhongs = (List<LoaiPhong>)ViewBag.LoaiPhongs;
+}
+<div class="section-heading page-heading"><div><span class="eyebrow">MODULE 3 · ĐĂNG KÝ KTX</span><h1>Gửi đơn đăng ký ở KTX</h1><p class="muted">Đơn chỉ là yêu cầu. Quản trị viên sẽ kiểm tra chỗ thực tế và phân phòng cho bạn.</p></div></div>
+<form asp-action="Create" method="post" class="form-card">
+    <div asp-validation-summary="All" class="validation"></div>
+    <div class="form-grid">
+        <div><label asp-for="NgayBatDau"></label><input asp-for="NgayBatDau" type="date" required/><span asp-validation-for="NgayBatDau" class="field-error"></span></div>
+        <div><label asp-for="NgayKetThucDuKien"></label><input asp-for="NgayKetThucDuKien" type="date" required/><span asp-validation-for="NgayKetThucDuKien" class="field-error"></span></div>
+        <div>
+            <label asp-for="NguyenVongLoaiPhong"></label>
+            <select asp-for="NguyenVongLoaiPhong">
+                <option value="">-- Không có nguyện vọng --</option>
+                @foreach (var lp in loaiPhongs)
+                {
+                    <option value="@lp.MaLoaiPhong" selected="@(Model.NguyenVongLoaiPhong == lp.MaLoaiPhong)">@lp.TenLoaiPhong (@lp.SoNguoiToiDa người)</option>
+                }
+            </select>
+            <span class="muted">Nguyện vọng chỉ mang tính tham khảo.</span>
+        </div>
+        <div class="full-field"><label asp-for="GhiChu"></label><textarea asp-for="GhiChu" rows="3" placeholder="Ví dụ: cần ở gần khu học tập"></textarea><span asp-validation-for="GhiChu" class="field-error"></span></div>
+    </div>
+    <div class="form-actions">
+        <a class="button secondary" asp-action="Index">Hủy</a>
+        <button class="button primary" type="submit">Gửi đơn</button>
+    </div>
+</form>

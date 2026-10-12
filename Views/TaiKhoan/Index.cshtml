@@ -1,0 +1,40 @@
+@model IEnumerable<TaiKhoan>
+@{ ViewData["Title"] = "Quản lý tài khoản"; }
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">MODULE 1 · TÀI KHOẢN</span><h1>Quản lý tài khoản</h1><p class="muted">Tài khoản sinh viên được tạo cùng hồ sơ ở mục Sinh viên. Tài khoản sinh viên không xóa được, chỉ khóa, để giữ lịch sử.</p></div>
+    <a class="button primary" asp-action="Create">＋ Thêm quản trị viên</a>
+</div>
+<form method="get" class="search-row">
+    <input name="q" value="@ViewBag.Q" placeholder="Tìm theo tên đăng nhập hoặc họ tên"/>
+    <select name="vaiTro" style="max-width:200px">
+        <option value="">Tất cả vai trò</option>
+        <option value="Admin" selected="@(ViewBag.VaiTro == "Admin")">Quản trị viên</option>
+        <option value="SinhVien" selected="@(ViewBag.VaiTro == "SinhVien")">Sinh viên</option>
+    </select>
+    <button class="button secondary" type="submit">Tìm</button>
+</form>
+<div class="table-card">
+    <table>
+        <thead><tr><th>TÊN ĐĂNG NHẬP</th><th>HỌ VÀ TÊN</th><th>EMAIL</th><th>VAI TRÒ</th><th>HỒ SƠ</th><th>TRẠNG THÁI</th><th></th></tr></thead>
+        <tbody>
+        @if (!Model.Any()) { <tr><td colspan="7" class="empty">Không có tài khoản phù hợp.</td></tr> }
+        @foreach (var tk in Model)
+        {
+            <tr>
+                <td><b>@tk.TenDangNhap</b></td>
+                <td>@tk.HoTen</td>
+                <td>@tk.Email</td>
+                <td><span class="badge @(tk.VaiTro == VaiTro.Admin ? "violet" : "blue")">@Nhan.NhanVaiTro(tk.VaiTro)</span></td>
+                <td>@(tk.SinhVien is null ? "—" : tk.SinhVien.MaSinhVien)</td>
+                <td><span class="badge @(tk.TrangThai == TrangThaiChung.DangHoatDong ? "success" : "danger")">@Nhan.NhanChung(tk.TrangThai)</span></td>
+                <td class="decision-actions">
+                    <a class="table-action" asp-action="Edit" asp-route-id="@tk.MaTaiKhoan">Sửa</a>
+                    <form asp-action="Delete" asp-route-id="@tk.MaTaiKhoan" method="post" onsubmit="return confirm('Xóa tài khoản @tk.TenDangNhap?')">
+                        <button class="table-action reject" type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

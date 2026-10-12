@@ -1,0 +1,46 @@
+@model DangKyTaiKhoanViewModel
+@{ ViewData["Title"] = "Đăng ký sinh viên"; }
+<div class="auth-page auth-register-page">
+    <header class="auth-header">
+        <a class="auth-brand" asp-controller="Account" asp-action="Welcome"><span class="auth-brand-mark">K</span><span><b>Ký túc xá</b><small>CỔNG THÔNG TIN NỘI TRÚ</small></span></a>
+        <div class="auth-header-action"><span>Đã có tài khoản?</span><a asp-action="Login">Đăng nhập <span>→</span></a></div>
+    </header>
+    <main class="auth-main">
+        <section class="auth-intro register-intro">
+            <div class="auth-intro-content">
+                <a class="auth-back" asp-controller="Account" asp-action="Welcome">← Quay lại trang chủ</a>
+                <span class="auth-kicker"><i></i> BẮT ĐẦU TẠI ĐÂY</span>
+                <h1>Tạo tài khoản. <em>An tâm nội trú.</em></h1>
+                <p>Đăng ký hồ sơ sinh viên một lần để gửi yêu cầu ở và theo dõi tình trạng ngay trên cổng thông tin.</p>
+            </div>
+            @await Html.PartialAsync("_Scene3D")
+        </section>
+        <section class="auth-form-side register-side">
+            <div class="auth-card register-card">
+                <div class="auth-mobile-mark">K</div>
+                <span class="auth-form-kicker">DÀNH CHO SINH VIÊN</span>
+                <h2>Tạo tài khoản</h2>
+                <p class="auth-subtitle">Điền thông tin để tạo hồ sơ và đăng nhập.</p>
+                <form asp-action="Register" method="post" class="auth-form register-form">
+                    <div asp-validation-summary="ModelOnly" class="auth-validation"></div>
+                    <div class="auth-fields-grid">
+                        <div class="auth-field"><label asp-for="MaSinhVien"></label><input asp-for="MaSinhVien" autocomplete="off" placeholder="Ví dụ: SV006"/><span asp-validation-for="MaSinhVien" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="HoTen"></label><input asp-for="HoTen" autocomplete="name" placeholder="Nguyễn Văn An"/><span asp-validation-for="HoTen" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="NgaySinh"></label><input asp-for="NgaySinh" type="date"/><span asp-validation-for="NgaySinh" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="GioiTinh"></label><select asp-for="GioiTinh"><option value="">Chọn giới tính</option><option value="Nam">Nam</option><option value="Nữ">Nữ</option></select><span asp-validation-for="GioiTinh" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="Lop"></label><input asp-for="Lop" placeholder="Ví dụ: CNTT1"/><span asp-validation-for="Lop" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="Khoa"></label><input asp-for="Khoa" placeholder="Tên khoa"/><span asp-validation-for="Khoa" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="SoDienThoai"></label><input asp-for="SoDienThoai" autocomplete="tel" placeholder="09xx xxx xxx"/><span asp-validation-for="SoDienThoai" class="field-error"></span></div>
+                        <div class="auth-field full-field"><label asp-for="Email"></label><input asp-for="Email" type="email" autocomplete="email" placeholder="ban@email.com"/><span asp-validation-for="Email" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="TenDangNhap"></label><input asp-for="TenDangNhap" autocomplete="username" placeholder="Tạo tên đăng nhập"/><span asp-validation-for="TenDangNhap" class="field-error"></span></div>
+                        <div class="auth-field"><label asp-for="MatKhau"></label><input asp-for="MatKhau" autocomplete="new-password" placeholder="Ít nhất 6 ký tự"/><span asp-validation-for="MatKhau" class="field-error"></span></div>
+                        <div class="auth-field full-field"><label asp-for="XacNhanMatKhau"></label><input asp-for="XacNhanMatKhau" autocomplete="new-password" placeholder="Nhập lại mật khẩu"/><span asp-validation-for="XacNhanMatKhau" class="field-error"></span></div>
+                    </div>
+                    <button class="auth-submit" type="submit"><span>Tạo tài khoản sinh viên</span><b>→</b></button>
+                </form>
+                <p class="auth-card-foot"><span class="lock-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span> Mã sinh viên chỉ được đăng ký một lần</p>
+            </div>
+            <footer class="auth-footer">© 2026 Ký túc xá sinh viên <span>•</span> Hỗ trợ quản lý nội trú</footer>
+        </section>
+    </main>
+</div>
