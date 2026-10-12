@@ -1,2 +1,2 @@
 wwwroot\css\site.css
-C:\Users\PC\source\repos\QuanLyKyTucXa_UNETI06_DHTI17A2ND\wwwroot\css\site.css
+D:\Kì 1- Năm 4\BTL\wwwroot\css\site.css

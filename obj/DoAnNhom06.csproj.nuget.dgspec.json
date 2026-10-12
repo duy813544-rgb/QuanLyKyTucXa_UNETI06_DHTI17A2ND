@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\source\\repos\\QuanLyKyTucXa_UNETI06_DHTI17A2ND\\DoAnNhom06.csproj": {}
+    "D:\\Kì 1- Năm 4\\BTL\\DoAnNhom06.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\source\\repos\\QuanLyKyTucXa_UNETI06_DHTI17A2ND\\DoAnNhom06.csproj": {
+    "D:\\Kì 1- Năm 4\\BTL\\DoAnNhom06.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\source\\repos\\QuanLyKyTucXa_UNETI06_DHTI17A2ND\\DoAnNhom06.csproj",
+        "projectUniqueName": "D:\\Kì 1- Năm 4\\BTL\\DoAnNhom06.csproj",
         "projectName": "DoAnNhom06",
-        "projectPath": "C:\\Users\\PC\\source\\repos\\QuanLyKyTucXa_UNETI06_DHTI17A2ND\\DoAnNhom06.csproj",
+        "projectPath": "D:\\Kì 1- Năm 4\\BTL\\DoAnNhom06.csproj",
         "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\source\\repos\\QuanLyKyTucXa_UNETI06_DHTI17A2ND\\obj\\",
+        "outputPath": "D:\\Kì 1- Năm 4\\BTL\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
