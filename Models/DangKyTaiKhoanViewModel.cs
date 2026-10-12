@@ -1,9 +1,7 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+
 using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
-
 public sealed class DangKyTaiKhoanViewModel
 {
     [Required(ErrorMessage = "Nhập mã sinh viên.")]
