@@ -1,0 +1,31 @@
+@model TaiKhoanEditViewModel
+@{
+    var laTaoMoi = Model.MaTaiKhoan is null;
+    ViewData["Title"] = laTaoMoi ? "Thêm quản trị viên" : "Sửa tài khoản";
+}
+<div class="section-heading page-heading"><div><span class="eyebrow">MODULE 1 · TÀI KHOẢN</span><h1>@ViewData["Title"]</h1><p class="muted">Khóa tài khoản để ngăn đăng nhập. Dữ liệu đăng ký và phân phòng vẫn được giữ lại.</p></div></div>
+<form asp-action="@(laTaoMoi ? "Create" : "Edit")" asp-route-id="@(laTaoMoi ? null : Model.MaTaiKhoan)" method="post" class="form-card">
+    <div asp-validation-summary="All" class="validation"></div>
+    <div class="form-grid">
+        <div><label asp-for="TenDangNhap"></label><input asp-for="TenDangNhap" autocomplete="off" required/><span asp-validation-for="TenDangNhap" class="field-error"></span></div>
+        <div><label asp-for="HoTen"></label><input asp-for="HoTen" required/><span asp-validation-for="HoTen" class="field-error"></span></div>
+        <div><label asp-for="Email"></label><input asp-for="Email" type="email" required/><span asp-validation-for="Email" class="field-error"></span></div>
+        <div>
+            <label asp-for="MatKhau">@(laTaoMoi ? "Mật khẩu" : "Mật khẩu mới (để trống nếu giữ nguyên)")</label>
+            <input asp-for="MatKhau" type="password" autocomplete="new-password" required="@(laTaoMoi ? "required" : null)" />
+            <span asp-validation-for="MatKhau" class="field-error"></span>
+        </div>
+        <div>
+            <label asp-for="TrangThai"></label>
+            <select asp-for="TrangThai">
+                <option value="DangHoatDong" selected="@(Model.TrangThai == "DangHoatDong")">Đang hoạt động</option>
+                <option value="Khoa" selected="@(Model.TrangThai == "Khoa")">Khóa</option>
+            </select>
+            <span asp-validation-for="TrangThai" class="field-error"></span>
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="button secondary" asp-action="Index">Hủy</a>
+        <button class="button primary" type="submit">Lưu tài khoản</button>
+    </div>
+</form>

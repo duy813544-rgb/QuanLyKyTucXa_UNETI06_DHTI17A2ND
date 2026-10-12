@@ -1,0 +1,58 @@
+@model SinhVienHomeViewModel
+@{
+    var sv = Model.SinhVien;
+    ViewData["Title"] = "Hồ sơ " + sv.MaSinhVien;
+}
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">MODULE 3 · SINH VIÊN</span><h1>@sv.HoTen</h1><p class="muted">@sv.MaSinhVien · @sv.Lop · @sv.Khoa</p></div>
+    <div class="quick-links">
+        <a class="button secondary" asp-action="Edit" asp-route-id="@sv.MaSinhVien">Sửa hồ sơ</a>
+        <a class="button secondary" asp-action="Index">← Danh sách</a>
+    </div>
+</div>
+<div class="stats">
+    <div class="stat"><span>Tài khoản</span><strong>@Model.TaiKhoan.TenDangNhap</strong><small>@Nhan.NhanChung(Model.TaiKhoan.TrangThai)</small></div>
+    <div class="stat"><span>Phòng hiện tại</span><strong>@(Model.PhongHienTai?.PhongKTX.TenPhong ?? "Chưa ở")</strong><small>@(Model.PhongHienTai is null ? "" : Model.PhongHienTai.PhongKTX.ToaNha + " · Tầng " + Model.PhongHienTai.PhongKTX.Tang)</small></div>
+    <div class="stat"><span>Đăng ký chờ duyệt</span><strong>@(Model.DangKyChoDuyet is null ? "Không có" : "#" + Model.DangKyChoDuyet.MaDangKy)</strong></div>
+    <div class="stat"><span>Liên hệ</span><strong>@sv.SoDienThoai</strong><small>@sv.Email</small></div>
+</div>
+
+<div class="section-heading" style="margin-top:20px"><div><h2>Lịch sử đăng ký KTX</h2></div></div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>MÃ ĐĂNG KÝ</th><th>NGÀY ĐĂNG KÝ</th><th>THỜI GIAN DỰ KIẾN</th><th>NGUYỆN VỌNG</th><th>TRẠNG THÁI</th></tr></thead>
+        <tbody>
+        @if (!Model.LichSuDangKy.Any()) { <tr><td colspan="5" class="empty">Chưa có đăng ký.</td></tr> }
+        @foreach (var dk in Model.LichSuDangKy)
+        {
+            <tr>
+                <td><a asp-controller="DangKyKTX" asp-action="Details" asp-route-id="@dk.MaDangKy">#@dk.MaDangKy</a></td>
+                <td>@dk.NgayDangKy.ToString("dd/MM/yyyy")</td>
+                <td>@dk.NgayBatDau.ToString("dd/MM/yyyy") → @dk.NgayKetThucDuKien.ToString("dd/MM/yyyy")</td>
+                <td>@(dk.NguyenVong?.TenLoaiPhong ?? "—")</td>
+                <td>@Nhan.NhanDangKy(dk.TrangThai)</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<div class="section-heading" style="margin-top:20px"><div><h2>Lịch sử ở phòng</h2><p class="muted">Mỗi lần chuyển phòng là một bản ghi mới; bản ghi cũ được giữ lại.</p></div></div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>PHÒNG</th><th>LOẠI · TÒA · TẦNG</th><th>NGÀY VÀO</th><th>NGÀY RA</th><th>TRẠNG THÁI</th></tr></thead>
+        <tbody>
+        @if (!Model.LichSuPhong.Any()) { <tr><td colspan="5" class="empty">Chưa có lịch sử ở phòng.</td></tr> }
+        @foreach (var pp in Model.LichSuPhong)
+        {
+            <tr>
+                <td><a asp-controller="PhongKTX" asp-action="Details" asp-route-id="@pp.MaPhong">@pp.PhongKTX.TenPhong</a></td>
+                <td>@pp.PhongKTX.LoaiPhong.TenLoaiPhong · @pp.PhongKTX.ToaNha · Tầng @pp.PhongKTX.Tang</td>
+                <td>@pp.NgayVao.ToString("dd/MM/yyyy")</td>
+                <td>@(pp.NgayRa?.ToString("dd/MM/yyyy") ?? "—")</td>
+                <td><span class="badge @(pp.TrangThai == TrangThaiPhanPhong.DangO ? "success" : "blue")">@Nhan.NhanPhanPhong(pp.TrangThai)</span></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

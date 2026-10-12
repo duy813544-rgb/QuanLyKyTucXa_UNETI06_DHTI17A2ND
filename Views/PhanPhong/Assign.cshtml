@@ -1,0 +1,46 @@
+@model PhanPhongChonViewModel
+@{
+    ViewData["Title"] = "Phân phòng cho sinh viên";
+    var dk = Model.DangKy;
+}
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">MODULE 4 · PHÂN PHÒNG</span><h1>Phân phòng cho @dk.SinhVien.HoTen</h1><p class="muted">@dk.MaSinhVien · @dk.SinhVien.GioiTinh · Đơn #@dk.MaDangKy · Nguyện vọng: @(dk.NguyenVong?.TenLoaiPhong ?? "không có")</p></div>
+    <a class="button secondary" asp-action="Index">← Quay lại</a>
+</div>
+<div class="notice">Chỉ hiển thị phòng đang sử dụng, đúng giới tính của sinh viên và còn chỗ. Số chỗ còn được tính từ số người đang ở. Hệ thống kiểm tra lại trước khi lưu.</div>
+
+<form asp-action="Assign" method="post" class="form-card" style="margin-top:16px">
+    <div asp-validation-summary="All" class="validation"></div>
+    <input type="hidden" name="maDangKy" value="@dk.MaDangKy"/>
+    @if (!Model.PhongPhuHop.Any())
+    {
+        <div class="empty">Không có phòng nào còn chỗ phù hợp với giới tính @dk.SinhVien.GioiTinh. Hãy thêm phòng hoặc tăng sức chứa loại phòng.</div>
+    }
+    else
+    {
+        <div class="table-card" style="box-shadow:none">
+            <table>
+                <thead><tr><th></th><th>PHÒNG</th><th>LOẠI PHÒNG</th><th>TÒA · TẦNG</th><th>GIỚI TÍNH</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th></tr></thead>
+                <tbody>
+                @foreach (var p in Model.PhongPhuHop)
+                {
+                    <tr>
+                        <td><input type="radio" name="maPhong" value="@p.MaPhong" required checked="@(Model.MaPhong == p.MaPhong)"/></td>
+                        <td><b>@p.TenPhong</b></td>
+                        <td>@p.TenLoaiPhong @(p.MaLoaiPhong == dk.NguyenVongLoaiPhong ? "· đúng nguyện vọng" : "")</td>
+                        <td>@p.ToaNha · Tầng @p.Tang</td>
+                        <td>@p.GioiTinhPhong</td>
+                        <td>@p.SucChua</td>
+                        <td>@p.SoNguoiDangO</td>
+                        <td><span class="badge success">Còn @p.SoChoCon</span></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <div class="form-actions">
+        <a class="button secondary" asp-action="Index">Hủy</a>
+        <button class="button primary" type="submit" disabled="@(!Model.PhongPhuHop.Any())">Xác nhận phân phòng</button>
+    </div>
+</form>

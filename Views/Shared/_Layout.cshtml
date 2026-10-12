@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>@ViewData["Title"] · Ký túc xá</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+</head>
+<body class="@(ViewBag.UserName == null ? "auth-body" : "app-body")">
+@if (ViewBag.UserName == null)
+{
+    @RenderBody()
+}
+else
+{
+    var vaiTro = (string?)ViewBag.UserRole;
+    <div class="shell">
+        <aside class="sidebar">
+            <a class="brand" asp-controller="Home" asp-action="Index"><span class="brand-mark">K</span><span>Ký túc xá<small>QUẢN LÝ NỘI TRÚ</small></span></a>
+            <div class="nav-caption">@(vaiTro == VaiTro.Admin ? "QUẢN TRỊ" : "SINH VIÊN")</div>
+            <nav class="nav-list" aria-label="Menu chính">
+            <a class="nav-link" asp-controller="Home" asp-action="Index">◫ <span>Tổng quan</span></a>
+            @if (vaiTro == VaiTro.SinhVien)
+            {
+                <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">▦ <span>Danh sách phòng</span></a>
+                <a class="nav-link" asp-controller="DangKyKTX" asp-action="Create">＋ <span>Đăng ký ở KTX</span></a>
+                <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">◷ <span>Đăng ký của tôi</span></a>
+            }
+            else if (vaiTro == VaiTro.Admin)
+            {
+                <a class="nav-link" asp-controller="LoaiPhong" asp-action="Index">▤ <span>Loại phòng</span></a>
+                <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">▦ <span>Phòng KTX</span></a>
+                <a class="nav-link" asp-controller="SinhVien" asp-action="Index">♙ <span>Sinh viên</span></a>
+                <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">◷ <span>Đăng ký KTX</span></a>
+                <a class="nav-link" asp-controller="PhanPhong" asp-action="Index">⇄ <span>Phân / chuyển / trả phòng</span></a>
+                <a class="nav-link" asp-controller="TaiKhoan" asp-action="Index">⚿ <span>Tài khoản</span></a>
+                <a class="nav-link" asp-controller="ThongKe" asp-action="Index">▥ <span>Thống kê</span></a>
+            }
+            </nav>
+            <div class="sidebar-foot">Hệ thống quản lý<br/>Ký túc xá sinh viên</div>
+        </aside>
+        <main class="main">
+            <header class="topbar"><div><span class="eyebrow">CỔNG QUẢN LÝ</span><strong>@ViewData["Title"]</strong></div>
+                <details class="user-menu">
+                    <summary class="user-area">
+                        <span class="avatar">@(((string)ViewBag.UserName).Substring(0,1).ToUpper())</span>
+                        <span class="user-text"><b>@(ViewBag.HoTen ?? ViewBag.UserName)</b><small>@Nhan.NhanVaiTro(vaiTro)</small></span>
+                        <span class="user-caret" aria-hidden="true">▾</span>
+                    </summary>
+                    <div class="user-dropdown">
+                        <a asp-controller="Account" asp-action="ChangePassword">⚿ Đổi mật khẩu</a>
+                        <button type="button" id="btnProfile">Thông tin cá nhân</button>
+                        <form asp-controller="Account" asp-action="Logout" method="post"><button type="submit">⏻ Đăng xuất</button></form>
+                    </div>
+                </details>
+            </header>
+            <section class="content">
+                @if (TempData["ThongBao"] is string thongBao) { <div class="notice">@thongBao</div> }
+                @if (TempData["Loi"] is string loi) { <div class="notice error-notice">@loi</div> }
+                @RenderBody()
+            </section>
+        </main>
+    </div>
+    <dialog id="profileDialog" class="profile-dialog" aria-labelledby="profileTitle">
+        <div class="profile-inner">
+            <div class="profile-top"><b id="profileTitle">Thông tin cá nhân</b><button type="button" class="profile-close" data-close aria-label="Đóng">×</button></div>
+            <div class="profile-body"></div>
+        </div>
+    </dialog>
+}
+@await RenderSectionAsync("Scripts", required: false)
+@if (ViewBag.UserName != null)
+{
+<script>
+(function () {
+    var path = location.pathname.toLowerCase();
+    document.querySelectorAll('.nav-list .nav-link').forEach(function (link) {
+        var href = (link.getAttribute('href') || '').toLowerCase();
+        if (!href || href === '/') { return; }
+        if (path === href || path.indexOf(href + '/') === 0 || path === href + '/index') {
+            link.classList.add('is-active');
+            link.setAttribute('aria-current', 'page');
+        }
+    });
+})();
+// Đóng menu người dùng khi bấm ra ngoài
+document.addEventListener('click', function (e) {
+    var menu = document.querySelector('.user-menu');
+    if (menu && menu.open && !menu.contains(e.target)) { menu.open = false; }
+});
+(function () {
+    var dlg = document.getElementById('profileDialog');
+    var btn = document.getElementById('btnProfile');
+    if (!dlg || !btn) return;
+    var body = dlg.querySelector('.profile-body');
+    btn.addEventListener('click', function () {
+        var menu = document.querySelector('.user-menu');
+        if (menu) menu.open = false;
+        body.innerHTML = '<p class="muted">Đang tải...</p>';
+        dlg.showModal();
+        fetch('/Account/Profile', { credentials: 'same-origin' })
+            .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+            .then(function (html) { body.innerHTML = html; })
+            .catch(function () { body.innerHTML = '<p class="muted">Không tải được thông tin. Vui lòng thử lại.</p>'; });
+    });
+    dlg.querySelector('[data-close]').addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+}
+</body>
+</html>

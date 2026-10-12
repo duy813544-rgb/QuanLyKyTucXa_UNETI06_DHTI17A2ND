@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Trang chủ";
+}
+
+<div class="auth-page">
+    <header class="auth-header">
+        <a class="auth-brand" asp-controller="Account" asp-action="Welcome"><span class="auth-brand-mark">K</span><span><b>Ký túc xá</b><small>CỔNG THÔNG TIN NỘI TRÚ</small></span></a>
+    </header>
+    <main class="auth-main">
+        <section class="auth-intro">
+            <div class="auth-intro-content">
+                <span class="auth-kicker"><i></i> HỆ THỐNG QUẢN LÝ NỘI TRÚ</span>
+                <h1>Một nơi cho <em>mọi hành trình</em> ở ký túc xá.</h1>
+                <p>Đăng ký chỗ ở, theo dõi hồ sơ và các khoản phí của bạn một cách rõ ràng, thuận tiện.</p>
+            </div>
+            @await Html.PartialAsync("_Scene3D")
+        </section>
+        <section class="choices-side">
+            <p class="eyebrow-home">CHỌN CÁCH BẠN MUỐN TIẾP TỤC</p>
+            <a class="choice" asp-controller="Account" asp-action="Login">
+                <span class="choice-num">01</span>
+                <span><b>Đăng nhập</b><small>Bạn đã có tài khoản sinh viên</small></span>
+                <span class="choice-arrow">→</span>
+            </a>
+            <a class="choice" asp-controller="Account" asp-action="Register">
+                <span class="choice-num">02</span>
+                <span><b>Đăng ký</b><small>Tạo hồ sơ và tài khoản mới</small></span>
+                <span class="choice-arrow">→</span>
+            </a>
+        </section>
+    </main>
+    <footer class="auth-footer">© 2026 Ký túc xá sinh viên <span>•</span> Hỗ trợ quản lý nội trú</footer>
+</div>

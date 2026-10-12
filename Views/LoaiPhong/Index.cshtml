@@ -1,0 +1,33 @@
+@model IEnumerable<LoaiPhong>
+@{ ViewData["Title"] = "Quản lý loại phòng"; }
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">MODULE 1 · DANH MỤC</span><h1>Quản lý loại phòng</h1><p class="muted">Sức chứa tối đa của loại phòng quyết định số chỗ còn của từng phòng.</p></div>
+    <a class="button primary" asp-action="Create">＋ Thêm loại phòng</a>
+</div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>TÊN LOẠI PHÒNG</th><th>SỨC CHỨA</th><th>ĐƠN GIÁ / THÁNG</th><th>SỐ PHÒNG</th><th>TRẠNG THÁI</th><th></th></tr></thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr><td colspan="6" class="empty">Chưa có loại phòng nào.</td></tr>
+        }
+        @foreach (var lp in Model)
+        {
+            <tr>
+                <td><b>@lp.TenLoaiPhong</b><span class="cell-sub">@lp.MoTa</span></td>
+                <td>@lp.SoNguoiToiDa người</td>
+                <td>@lp.DonGiaThang.ToString("N0") ₫</td>
+                <td>@lp.PhongKTXs.Count</td>
+                <td><span class="badge @(lp.TrangThai == TrangThaiLoaiPhong.DangSuDung ? "success" : "pending")">@Nhan.NhanLoaiPhong(lp.TrangThai)</span></td>
+                <td class="decision-actions">
+                    <a class="table-action" asp-action="Edit" asp-route-id="@lp.MaLoaiPhong">Sửa</a>
+                    <form asp-action="Delete" asp-route-id="@lp.MaLoaiPhong" method="post" onsubmit="return confirm('Xóa loại phòng này?')">
+                        <button class="table-action reject" type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

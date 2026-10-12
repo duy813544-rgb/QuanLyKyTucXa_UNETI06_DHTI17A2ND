@@ -1,0 +1,27 @@
+@model LoaiPhong
+@{
+    var laTaoMoi = Model.MaLoaiPhong == 0;
+    ViewData["Title"] = laTaoMoi ? "Thêm loại phòng" : "Sửa loại phòng";
+}
+<div class="section-heading page-heading"><div><span class="eyebrow">MODULE 1 · DANH MỤC</span><h1>@ViewData["Title"]</h1></div></div>
+<form asp-action="@(laTaoMoi ? "Create" : "Edit")" asp-route-id="@(laTaoMoi ? null : (int?)Model.MaLoaiPhong)" method="post" class="form-card">
+    <div asp-validation-summary="All" class="validation"></div>
+    <div class="form-grid">
+        <div><label asp-for="TenLoaiPhong"></label><input asp-for="TenLoaiPhong" required/><span asp-validation-for="TenLoaiPhong" class="field-error"></span></div>
+        <div><label asp-for="SoNguoiToiDa"></label><input asp-for="SoNguoiToiDa" type="number" min="1" required/><span asp-validation-for="SoNguoiToiDa" class="field-error"></span></div>
+        <div><label asp-for="DonGiaThang"></label><input asp-for="DonGiaThang" type="number" min="1" step="1000" required/><span asp-validation-for="DonGiaThang" class="field-error"></span></div>
+        <div>
+            <label asp-for="TrangThai"></label>
+            <select asp-for="TrangThai">
+                <option value="@TrangThaiLoaiPhong.DangSuDung">Đang sử dụng</option>
+                <option value="@TrangThaiLoaiPhong.NgungSuDung">Ngừng sử dụng</option>
+            </select>
+            <span asp-validation-for="TrangThai" class="field-error"></span>
+        </div>
+        <div class="full-field"><label asp-for="MoTa"></label><textarea asp-for="MoTa" rows="3"></textarea><span asp-validation-for="MoTa" class="field-error"></span></div>
+    </div>
+    <div class="form-actions">
+        <a class="button secondary" asp-action="Index">Hủy</a>
+        <button class="button primary" type="submit">Lưu loại phòng</button>
+    </div>
+</form>

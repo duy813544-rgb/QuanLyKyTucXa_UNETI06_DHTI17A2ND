@@ -1,0 +1,51 @@
+@model SinhVienEditViewModel
+@{
+    var laTaoMoi = Model.LaTaoMoi;
+    ViewData["Title"] = laTaoMoi ? "Thêm sinh viên" : "Sửa hồ sơ sinh viên";
+}
+<div class="section-heading page-heading"><div><span class="eyebrow">MODULE 3 · SINH VIÊN</span><h1>@ViewData["Title"]</h1></div></div>
+<form asp-action="@(laTaoMoi ? "Create" : "Edit")" asp-route-id="@(laTaoMoi ? null : Model.MaSinhVien)" method="post" class="form-card">
+    <div asp-validation-summary="All" class="validation"></div>
+    <div class="form-grid">
+        <div>
+            <label asp-for="MaSinhVien"></label>
+            @if (laTaoMoi) { <input asp-for="MaSinhVien" required/> }
+            else { <input asp-for="MaSinhVien" readonly/> }
+            <span asp-validation-for="MaSinhVien" class="field-error"></span>
+        </div>
+        <div><label asp-for="HoTen"></label><input asp-for="HoTen" required/><span asp-validation-for="HoTen" class="field-error"></span></div>
+        <div><label asp-for="NgaySinh"></label><input asp-for="NgaySinh" type="date" required/><span asp-validation-for="NgaySinh" class="field-error"></span></div>
+        <div>
+            <label asp-for="GioiTinh"></label>
+            <select asp-for="GioiTinh" required>
+                <option value="Nam" selected="@(Model.GioiTinh == "Nam")">Nam</option>
+                <option value="Nữ" selected="@(Model.GioiTinh == "Nữ")">Nữ</option>
+            </select>
+            <span asp-validation-for="GioiTinh" class="field-error"></span>
+        </div>
+        <div><label asp-for="Lop"></label><input asp-for="Lop" required/><span asp-validation-for="Lop" class="field-error"></span></div>
+        <div><label asp-for="Khoa"></label><input asp-for="Khoa" required/><span asp-validation-for="Khoa" class="field-error"></span></div>
+        <div><label asp-for="SoDienThoai"></label><input asp-for="SoDienThoai" inputmode="numeric" required/><span asp-validation-for="SoDienThoai" class="field-error"></span></div>
+        <div><label asp-for="Email"></label><input asp-for="Email" type="email" required/><span asp-validation-for="Email" class="field-error"></span></div>
+        <div class="full-field"><label asp-for="DiaChi"></label><textarea asp-for="DiaChi" rows="2"></textarea><span asp-validation-for="DiaChi" class="field-error"></span></div>
+        @if (!laTaoMoi)
+        {
+            <div>
+                <label asp-for="TrangThai"></label>
+                <select asp-for="TrangThai">
+                    <option value="DangHoatDong" selected="@(Model.TrangThai == "DangHoatDong")">Đang hoạt động</option>
+                    <option value="Khoa" selected="@(Model.TrangThai == "Khoa")">Khóa</option>
+                </select>
+            </div>
+        }
+        else
+        {
+            <div><label asp-for="TenDangNhap">Tên đăng nhập (để trống sẽ dùng mã sinh viên)</label><input asp-for="TenDangNhap"/><span asp-validation-for="TenDangNhap" class="field-error"></span></div>
+            <div><label asp-for="MatKhau"></label><input asp-for="MatKhau" type="password" autocomplete="new-password" required/><span asp-validation-for="MatKhau" class="field-error"></span></div>
+        }
+    </div>
+    <div class="form-actions">
+        <a class="button secondary" asp-action="Index">Hủy</a>
+        <button class="button primary" type="submit">Lưu hồ sơ</button>
+    </div>
+</form>

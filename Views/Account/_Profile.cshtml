@@ -1,0 +1,20 @@
+@model DoAnNhom06.Models.TaiKhoan
+<div class="profile-head">
+    <span class="avatar">@(Model.HoTen.Substring(0, 1).ToUpper())</span>
+    <div><b>@Model.HoTen</b><small>@DoAnNhom06.Models.Nhan.NhanVaiTro(Model.VaiTro)</small></div>
+</div>
+<dl class="profile-list">
+    <dt>Tên đăng nhập</dt><dd>@Model.TenDangNhap</dd>
+    <dt>Email</dt><dd>@Model.Email</dd>
+    <dt>Trạng thái</dt><dd>@DoAnNhom06.Models.Nhan.NhanChung(Model.TrangThai)</dd>
+    @if (Model.SinhVien is not null)
+    {
+        <dt>Mã sinh viên</dt><dd>@Model.SinhVien.MaSinhVien</dd>
+        <dt>Ngày sinh</dt><dd>@Model.SinhVien.NgaySinh.ToString("dd/MM/yyyy")</dd>
+        <dt>Giới tính</dt><dd>@Model.SinhVien.GioiTinh</dd>
+        <dt>Lớp</dt><dd>@Model.SinhVien.Lop</dd>
+        <dt>Khoa</dt><dd>@Model.SinhVien.Khoa</dd>
+        <dt>Số điện thoại</dt><dd>@Model.SinhVien.SoDienThoai</dd>
+        <dt>Địa chỉ</dt><dd>@(string.IsNullOrWhiteSpace(Model.SinhVien.DiaChi) ? "—" : Model.SinhVien.DiaChi)</dd>
+    }
+</dl>

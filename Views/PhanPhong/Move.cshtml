@@ -1,0 +1,41 @@
+@model ChuyenPhongViewModel
+@{
+    ViewData["Title"] = "Chuyển phòng";
+    var hienTai = Model.HienTai;
+}
+<div class="section-heading page-heading">
+    <div><span class="eyebrow">MODULE 4 · CHUYỂN PHÒNG</span><h1>Chuyển phòng cho @hienTai.DangKyKTX.SinhVien.HoTen</h1><p class="muted">Đang ở @hienTai.PhongKTX.TenPhong (@hienTai.PhongKTX.ToaNha, Tầng @hienTai.PhongKTX.Tang) từ @hienTai.NgayVao.ToString("dd/MM/yyyy"). Bản ghi cũ sẽ chuyển sang Đã chuyển.</p></div>
+    <a class="button secondary" asp-action="Index">← Quay lại</a>
+</div>
+<form asp-action="Move" asp-route-id="@hienTai.MaPhanPhong" method="post" class="form-card">
+    <div asp-validation-summary="All" class="validation"></div>
+    @if (!Model.PhongPhuHop.Any())
+    {
+        <div class="empty">Không có phòng khác còn chỗ phù hợp với giới tính @hienTai.DangKyKTX.SinhVien.GioiTinh.</div>
+    }
+    else
+    {
+        <div class="table-card" style="box-shadow:none">
+            <table>
+                <thead><tr><th></th><th>PHÒNG MỚI</th><th>LOẠI PHÒNG</th><th>TÒA · TẦNG</th><th>SỨC CHỨA</th><th>CHỖ CÒN</th></tr></thead>
+                <tbody>
+                @foreach (var p in Model.PhongPhuHop)
+                {
+                    <tr>
+                        <td><input type="radio" name="maPhongMoi" value="@p.MaPhong" required checked="@(Model.MaPhongMoi == p.MaPhong)"/></td>
+                        <td><b>@p.TenPhong</b></td>
+                        <td>@p.TenLoaiPhong</td>
+                        <td>@p.ToaNha · Tầng @p.Tang</td>
+                        <td>@p.SucChua</td>
+                        <td><span class="badge success">Còn @p.SoChoCon</span></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <div class="form-actions">
+        <a class="button secondary" asp-action="Index">Hủy</a>
+        <button class="button primary" type="submit" disabled="@(!Model.PhongPhuHop.Any())">Xác nhận chuyển phòng</button>
+    </div>
+</form>
