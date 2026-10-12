@@ -3382,11 +3382,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dell\\OneDrive\\文档\\Downloads\\DoAnNhom06_4\\DoAnNhom06\\DoAnNhom06.csproj",
+      "projectUniqueName": "D:\\DoAnNhom06\\DoAnNhom06\\DoAnNhom06.csproj",
       "projectName": "DoAnNhom06",
-      "projectPath": "C:\\Users\\Dell\\OneDrive\\文档\\Downloads\\DoAnNhom06_4\\DoAnNhom06\\DoAnNhom06.csproj",
+      "projectPath": "D:\\DoAnNhom06\\DoAnNhom06\\DoAnNhom06.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dell\\OneDrive\\文档\\Downloads\\DoAnNhom06_4\\DoAnNhom06\\obj\\",
+      "outputPath": "D:\\DoAnNhom06\\DoAnNhom06\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
