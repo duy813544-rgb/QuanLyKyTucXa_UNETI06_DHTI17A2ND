@@ -14,31 +14,36 @@
     else
     {
         var vaiTro = (string?)ViewBag.UserRole;
+        var laAdmin = vaiTro == VaiTro.Admin;
         <div class="shell">
             <aside class="sidebar">
                 <a class="brand" asp-controller="Home" asp-action="Index"><span class="brand-mark">K</span><span>Ký túc xá<small>QUẢN LÝ NỘI TRÚ</small></span></a>
-                <div class="nav-caption">@(vaiTro == VaiTro.Admin ? "QUẢN TRỊ" : "SINH VIÊN")</div>
+                <div class="nav-caption">@(laAdmin ? "QUẢN TRỊ" : "SINH VIÊN")</div>
                 <nav class="nav-list" aria-label="Menu chính">
                     <a class="nav-link" asp-controller="Home" asp-action="Index">◫ <span>Tổng quan</span></a>
-                    @if (vaiTro == VaiTro.Admin)
+
+                    @if (laAdmin)
                     {
                         <a class="nav-link" asp-controller="LoaiPhong" asp-action="Index">▤ <span>Loại phòng</span></a>
+                        <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">▦ <span>Danh sách Phòng ký túc xá</span></a>
+                        <a class="nav-link" asp-controller="SinhVien" asp-action="Index">♙ <span>Thông tin Sinh viên</span></a>
+                        <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">◷ <span>Đăng ký KTX</span></a>
+                        <a class="nav-link" asp-controller="PhanPhong" asp-action="Index">⇄ <span>Phân / chuyển / trả phòng</span></a>
                         <a class="nav-link" asp-controller="TaiKhoan" asp-action="Index">⚿ <span>Tài khoản</span></a>
-                        <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">Phòng ký túc xá</a>
-                        <a class="nav-link" asp-controller="SinhVien" asp-action="Index">Sinh viên</a>
-                        <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">Đăng ký</a>
-                        <a class="nav-link" asp-controller="PhanPhong" asp-action="Index">Phân phòng / Chuyển / Trả phòng</a>
-                        <a class="nav-link" asp-controller="ThongKe" asp-action="Index">Thống kê</a>
+                        <a class="nav-link" asp-controller="ThongKe" asp-action="Index">▥ <span>Thống kê</span></a>
                     }
                     else
                     {
-                        <button type="button" class="nav-link nav-button" id="btnProfileNav">◉ <span>Hồ sơ cá nhân</span></button>
+                        <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">▦ <span>Danh sách Phòng ký túc xá</span></a>
+                        <a class="nav-link" asp-controller="DangKyKTX" asp-action="Create">＋ <span>Đăng ký ở KTX</span></a>
+                        <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">◷ <span>Thông tin phòng Đăng ký </span></a>
                     }
-                    <a class="nav-link" asp-controller="Account" asp-action="ChangePassword">⚿ <span>Đổi mật khẩu</span></a>
 
+                    <a class="nav-link" asp-controller="Account" asp-action="ChangePassword">⚿ <span>Đổi mật khẩu</span></a>
                 </nav>
                 <div class="sidebar-foot">Hệ thống quản lý<br />Ký túc xá sinh viên</div>
             </aside>
+
             <main class="main">
                 <header class="topbar">
                     <div><span class="eyebrow">CỔNG QUẢN LÝ</span><strong>@ViewData["Title"]</strong></div>
@@ -70,6 +75,7 @@
                         </div>
                     </details>
                 </header>
+
                 <section class="content">
                     @if (TempData["ThongBao"] is string thongBao)
                     {
@@ -83,18 +89,25 @@
                 </section>
             </main>
         </div>
+
         <dialog id="profileDialog" class="profile-dialog" aria-labelledby="profileTitle">
             <div class="profile-inner">
-                <div class="profile-top"><b id="profileTitle">Thông tin cá nhân</b><button type="button" class="profile-close" data-close aria-label="Đóng">×</button></div>
+                <div class="profile-top">
+                    <b id="profileTitle">Thông tin cá nhân</b>
+                    <button type="button" class="profile-close" data-close aria-label="Đóng">×</button>
+                </div>
                 <div class="profile-body"></div>
             </div>
         </dialog>
     }
+
     @await RenderSectionAsync("Scripts", required: false)
+
     @if (ViewBag.UserName != null)
     {
         <script>
                 (function () {
+                    // Đánh dấu mục menu đang mở
                     var path = location.pathname.toLowerCase();
                     document.querySelectorAll('.nav-list .nav-link').forEach(function (link) {
                         var href = (link.getAttribute('href') || '').toLowerCase();
@@ -104,18 +117,21 @@
                             link.setAttribute('aria-current', 'page');
                         }
                     });
-                })();
-                // Đóng menu người dùng khi bấm ra ngoài
-                document.addEventListener('click', function (e) {
-                    var menu = document.querySelector('.user-menu');
-                    if (menu && menu.open && !menu.contains(e.target)) { menu.open = false; }
-                });
-                (function () {
+
+                    // Đóng menu người dùng khi bấm ra ngoài
+                    document.addEventListener('click', function (e) {
+                        var menu = document.querySelector('.user-menu');
+                        if (menu && menu.open && !menu.contains(e.target)) { menu.open = false; }
+                    });
+
+                    // Hộp thoại thông tin cá nhân
                     var dlg = document.getElementById('profileDialog');
                     var btns = [document.getElementById('btnProfile'), document.getElementById('btnProfileNav')].filter(Boolean);
                     if (!dlg || !btns.length) return;
                     var body = dlg.querySelector('.profile-body');
+
                     btns.forEach(function (btn) { btn.addEventListener('click', openProfile); });
+
                     function openProfile() {
                         var menu = document.querySelector('.user-menu');
                         if (menu) menu.open = false;
@@ -126,6 +142,7 @@
                             .then(function (html) { body.innerHTML = html; })
                             .catch(function () { body.innerHTML = '<p class="muted">Không tải được thông tin. Vui lòng thử lại.</p>'; });
                     }
+
                     dlg.querySelector('[data-close]').addEventListener('click', function () { dlg.close(); });
                     dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
                 })();
