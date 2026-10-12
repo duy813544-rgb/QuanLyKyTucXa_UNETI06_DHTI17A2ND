@@ -13,7 +13,8 @@ public class AccountController(AppDbContext db) : BaseController
     [HttpGet]
     public IActionResult Welcome() => SignedIn ? RedirectToAction("Index", "Home") : View();
 
-    [HttpGet]
+    [HttpGet]   
+
     public IActionResult Login(string? returnUrl = null)
     {
         if (SignedIn) return RedirectToAction("Index", "Home");
@@ -160,4 +161,6 @@ public class AccountController(AppDbContext db) : BaseController
         TempData["ThongBao"] = "Đổi mật khẩu thành công.";
         return RedirectToAction("Index", "Home");
     }
+   
+
 }
