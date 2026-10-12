@@ -1,5 +1,5 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+// Họ và tên: Nguyễn Bá Hùng
+// Mã sinh viên: 23274800011
 using DoAnNhom06.Filters;
 using DoAnNhom06.Models;
 using DoAnNhom06.Services;
@@ -32,25 +32,42 @@ public class ThongKeController(AppDbContext db) : BaseController
         var theoToa = await db.PhanPhongs.AsNoTracking()
             .Where(x => x.TrangThai == TrangThaiPhanPhong.DangO)
             .GroupBy(x => x.PhongKTX.ToaNha)
+            .OrderBy(g => g.Key)
             .Select(g => new SinhVienTheoToa(g.Key, g.Count()))
-            .OrderBy(x => x.ToaNha)
             .ToListAsync();
 
         var theoLoaiSv = await db.PhanPhongs.AsNoTracking()
             .Where(x => x.TrangThai == TrangThaiPhanPhong.DangO)
             .GroupBy(x => x.PhongKTX.LoaiPhong.TenLoaiPhong)
+            .OrderBy(g => g.Key)
             .Select(g => new SinhVienTheoLoai(g.Key, g.Count()))
-            .OrderBy(x => x.TenLoai)
             .ToListAsync();
 
-        var theoTrangThaiDk = await db.DangKyKTXs.AsNoTracking()
+        // Luôn hiện đủ 4 trạng thái; trạng thái chưa có đăng ký nào thì số lượng là 0.
+        var demDangKy = await db.DangKyKTXs.AsNoTracking()
             .GroupBy(x => x.TrangThai)
-            .Select(g => new DangKyTheoTrangThai(g.Key, g.Count()))
-            .OrderBy(x => x.TrangThai)
-            .ToListAsync();
+            .Select(g => new { TrangThai = g.Key, SoLuong = g.Count() })
+            .ToDictionaryAsync(x => x.TrangThai, x => x.SoLuong);
+        string[] cacTrangThaiDk =
+        [
+            TrangThaiDangKy.ChoDuyet,
+            TrangThaiDangKy.DaPhanPhong,
+            TrangThaiDangKy.DaTraPhong,
+            TrangThaiDangKy.DaHuy
+        ];
+        var theoTrangThaiDk = cacTrangThaiDk
+            .Select(t => new DangKyTheoTrangThai(t, demDangKy.GetValueOrDefault(t)))
+            .ToList();
 
-        // Gom theo tháng trên bộ nhớ sau khi lấy ngày vào: đơn giản và không phụ thuộc cách dịch DateOnly sang SQL.
-        var ngayVao = await db.PhanPhongs.AsNoTracking().Select(x => x.NgayVao).ToListAsync();
+        // Gom theo tháng trên bộ nhớ: không phụ thuộc cách dịch DateOnly sang SQL.
+        // Mỗi đăng ký chỉ tính một lần, vào ngày vào đầu tiên; bản ghi tạo do chuyển phòng không tính là vào KTX thêm.
+        var cacLuotPhan = await db.PhanPhongs.AsNoTracking()
+            .Select(x => new { x.MaDangKy, x.NgayVao })
+            .ToListAsync();
+        var ngayVao = cacLuotPhan
+            .GroupBy(x => x.MaDangKy)
+            .Select(g => g.Min(x => x.NgayVao))
+            .ToList();
         var theoThang = ngayVao
             .GroupBy(d => new { d.Year, d.Month })
             .Select(g => new VaoKtxTheoThang(g.Key.Year, g.Key.Month, g.Count()))
