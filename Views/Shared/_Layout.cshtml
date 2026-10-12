@@ -24,12 +24,18 @@
                     {
                         <a class="nav-link" asp-controller="LoaiPhong" asp-action="Index">▤ <span>Loại phòng</span></a>
                         <a class="nav-link" asp-controller="TaiKhoan" asp-action="Index">⚿ <span>Tài khoản</span></a>
+                        <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">Phòng ký túc xá</a>
+                        <a class="nav-link" asp-controller="SinhVien" asp-action="Index">Sinh viên</a>
+                        <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">Đăng ký</a>
+                        <a class="nav-link" asp-controller="PhanPhong" asp-action="Index">Phân phòng / Chuyển / Trả phòng</a>
+                        <a class="nav-link" asp-controller="ThongKe" asp-action="Index">Thống kê</a>
                     }
                     else
                     {
                         <button type="button" class="nav-link nav-button" id="btnProfileNav">◉ <span>Hồ sơ cá nhân</span></button>
                     }
                     <a class="nav-link" asp-controller="Account" asp-action="ChangePassword">⚿ <span>Đổi mật khẩu</span></a>
+
                 </nav>
                 <div class="sidebar-foot">Hệ thống quản lý<br />Ký túc xá sinh viên</div>
             </aside>
