@@ -15,7 +15,6 @@
     <div class="stat"><span>Số chỗ còn</span><strong>@Model.SoChoCon</strong><small>@(Model.SoChoCon > 0 ? "Còn khả năng tiếp nhận" : "Phòng đã đầy")</small></div>
     <div class="stat"><span>Trạng thái</span><strong>@Nhan.NhanPhong(Model.TrangThai)</strong><small>@(Model.TrangThai == TrangThaiPhong.DangSuDung ? "Có thể phân phòng" : "Không phân thêm sinh viên")</small></div>
 </div>
-
 @if (laAdmin)
 {
     <div class="quick-links" style="margin:16px 0">

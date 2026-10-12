@@ -4,7 +4,6 @@
     <div><span class="eyebrow">MODULE 2 · PHÒNG KÝ TÚC XÁ</span><h1>Danh sách phòng</h1><p class="muted">Số chỗ còn = sức chứa loại phòng − số sinh viên đang ở. Không nhập tay.</p></div>
     @if (Model.LaAdmin) { <a class="button primary" asp-action="Create">＋ Thêm phòng</a> }
 </div>
-
 <form method="get" class="filter-card">
     <div class="search-row">
         <input name="q" value="@Model.Q" placeholder="Tìm theo tên phòng,tên tòa, ví dụ: A101,Tòa A"/>

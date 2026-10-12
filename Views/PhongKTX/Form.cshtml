@@ -15,7 +15,7 @@
                 <option value="">-- Chọn loại phòng --</option>
                 @foreach (var lp in loaiPhongs)
                 {
-                    <option value="@lp.MaLoaiPhong" selected="@(Model.MaLoaiPhong == lp.MaLoaiPhong)">@lp.TenLoaiPhong (@lp.SoNguoiToiDa người)</option>
+                   <option value="@lp.MaLoaiPhong" selected="@(Model.MaLoaiPhong == lp.MaLoaiPhong)">@lp.TenLoaiPhong (@lp.SoNguoiToiDa người)</option>
                 }
             </select>
             <span asp-validation-for="MaLoaiPhong" class="field-error"></span>
