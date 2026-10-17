@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
 
-/// <summary>Entity DangKyKTX theo đề. Tách khỏi PhanPhong để giữ lịch sử yêu cầu và việc xếp phòng.</summary>
+
 public partial class DangKyKTX
 {
     [Key]

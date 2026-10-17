@@ -19,7 +19,7 @@ public class HomeController(AppDbContext db) : BaseController
 
     private async Task<IActionResult> DashboardAsync()
     {
-        // Mọi số liệu lấy trực tiếp từ CSDL bằng LINQ tại thời điểm truy vấn.
+
         var tongCho = await db.PhongKTXs
             .Where(p => p.TrangThai == TrangThaiPhong.DangSuDung)
             .SumAsync(p => p.LoaiPhong.SoNguoiToiDa);
@@ -43,7 +43,7 @@ public class HomeController(AppDbContext db) : BaseController
 
     private async Task<IActionResult> TrangSinhVienAsync()
     {
-        // MaSinhVien lấy từ phiên đăng nhập (đã đối chiếu CSDL trong bộ lọc), không lấy từ URL.
+
         if (StudentId is null) return RedirectToAction(nameof(AccountController.Login), "Account");
 
         var sinhVien = await db.SinhViens.AsNoTracking().Include(x => x.TaiKhoan)

@@ -2,14 +2,13 @@
 // Mã sinh viên: 23203100014
 namespace DoAnNhom06.Models;
 
-/// <summary>Vai trò. Khớp CHECK trong script SQL theo đề: chỉ 'Admin' và 'SinhVien'.</summary>
+
 public static class VaiTro
 {
     public const string Admin = "Admin";
     public const string SinhVien = "SinhVien";
 }
 
-/// <summary>Trạng thái tài khoản và hồ sơ sinh viên.</summary>
 public static class TrangThaiChung
 {
     public const string DangHoatDong = "DangHoatDong";

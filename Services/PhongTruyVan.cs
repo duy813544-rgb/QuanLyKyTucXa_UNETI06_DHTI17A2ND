@@ -7,10 +7,6 @@ namespace DoAnNhom06.Services;
 
 public static class PhongTruyVan
 {
-    /// <summary>
-    /// Mỗi phòng kèm sức chứa (SoNguoiToiDa của loại phòng) và số PhanPhong đang ở.
-    /// Toàn bộ được dịch thành SQL; không tải dữ liệu rồi tính trên trình duyệt.
-    /// </summary>
     public static IQueryable<PhongRow> KemSoCho(AppDbContext db) =>
         db.PhongKTXs.Select(p => new PhongRow
         {

@@ -11,7 +11,7 @@ public abstract class BaseController : Controller
     protected string? UserRole => HttpContext.Session.GetString("UserRole");
     protected string? HoTen => HttpContext.Session.GetString("HoTen");
 
-    /// <summary>Mã sinh viên của phiên hiện tại. Chỉ lấy từ tài khoản đăng nhập, không lấy từ URL.</summary>
+
     protected string? StudentId => HttpContext.Session.GetString("StudentId");
 
     protected bool SignedIn => !string.IsNullOrEmpty(UserName);

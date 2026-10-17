@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
 
-/// <summary>Entity SinhVien theo đề. Khóa chính là MaSinhVien (mã sinh viên).</summary>
+
 public partial class SinhVien
 {
     [Key]

@@ -11,7 +11,7 @@ namespace DoAnNhom06.Controllers;
 [RequireRole(VaiTro.Admin, VaiTro.SinhVien)]
 public class DangKyKTXController(AppDbContext db) : BaseController
 {
-    /// <summary>Quản trị viên: toàn bộ đơn đăng ký. Sinh viên: đơn của chính mình.</summary>
+
     public async Task<IActionResult> Index(string? trangThai, string? q)
     {
         if (!LaAdmin)
@@ -43,7 +43,7 @@ public class DangKyKTXController(AppDbContext db) : BaseController
             .FirstOrDefaultAsync(x => x.MaDangKy == id);
         if (dk is null) return NotFound();
 
-        // Sinh viên chỉ xem đơn của chính mình; trả về NotFound để không lộ dữ liệu của người khác.
+
         if (!LaAdmin && dk.MaSinhVien != StudentId) return NotFound();
         return View(dk);
     }
@@ -56,7 +56,6 @@ public class DangKyKTXController(AppDbContext db) : BaseController
         return View(new DangKyKTXCreateViewModel { NgayBatDau = homNay, NgayKetThucDuKien = homNay.AddMonths(6) });
     }
 
-    /// <summary>Kiểm tra nghiệp vụ trước khi gửi đơn: hồ sơ hoạt động, không đơn trùng, không đang ở.</summary>
     [HttpPost, ValidateAntiForgeryToken, RequireRole(VaiTro.SinhVien)]
     public async Task<IActionResult> Create(DangKyKTXCreateViewModel model)
     {
@@ -95,7 +94,7 @@ public class DangKyKTXController(AppDbContext db) : BaseController
             db.DangKyKTXs.Add(new DangKyKTX
             {
                 MaSinhVien = maSv,
-                NgayDangKy = homNay, // do hệ thống xác định
+                NgayDangKy = homNay, 
                 NgayBatDau = model.NgayBatDau!.Value,
                 NgayKetThucDuKien = model.NgayKetThucDuKien!.Value,
                 NguyenVongLoaiPhong = model.NguyenVongLoaiPhong,
@@ -106,7 +105,7 @@ public class DangKyKTXController(AppDbContext db) : BaseController
         }
         catch (DbUpdateException ex)
         {
-            // Ràng buộc chỉ mục duy nhất ở CSDL: đơn chờ duyệt được gửi đồng thời.
+
             ModelState.AddModelError(string.Empty, "Không thể gửi đơn: " + ex.GetBaseException().Message);
             await NapDanhSachLoaiAsync();
             return View(model);
@@ -116,7 +115,7 @@ public class DangKyKTXController(AppDbContext db) : BaseController
         return RedirectToAction(nameof(Index));
     }
 
-    /// <summary>Sinh viên hủy đơn: chỉ khi đơn còn Chờ duyệt.</summary>
+
     [HttpPost, ValidateAntiForgeryToken, RequireRole(VaiTro.SinhVien)]
     public async Task<IActionResult> Cancel(int id)
     {
@@ -133,7 +132,6 @@ public class DangKyKTXController(AppDbContext db) : BaseController
         return RedirectToAction(nameof(Index));
     }
 
-    /// <summary>Quản trị viên từ chối đơn chờ duyệt.</summary>
     [HttpPost, ValidateAntiForgeryToken, RequireRole(VaiTro.Admin)]
     public async Task<IActionResult> Reject(int id)
     {

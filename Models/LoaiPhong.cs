@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
 
-/// <summary>Entity LoaiPhong theo đề. Sức chứa của phòng lấy từ SoNguoiToiDa.</summary>
 public partial class LoaiPhong
 {
     [Key]

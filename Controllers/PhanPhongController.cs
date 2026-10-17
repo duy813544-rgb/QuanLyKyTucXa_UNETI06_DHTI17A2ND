@@ -52,10 +52,7 @@ public class PhanPhongController(AppDbContext db) : BaseController
         return View(await TaoViewModelPhanPhongAsync(dk, null));
     }
 
-    /// <summary>
-    /// Phân phòng: kiểm tra đăng ký chờ duyệt, sinh viên chưa ở phòng khác, phòng hoạt động,
-    /// đúng giới tính và còn chỗ. Kiểm tra lại trong giao dịch Serializable trước khi ghi.
-    /// </summary>
+
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Assign(int maDangKy, int? maPhong)
     {
@@ -81,7 +78,7 @@ public class PhanPhongController(AppDbContext db) : BaseController
         try
         {
             await using var giaoDich = await db.Database.BeginTransactionAsync(IsolationLevel.Serializable);
-            // Kiểm tra lại: dữ liệu có thể đã đổi từ lúc mở form.
+
             loi = await KiemTraPhanPhongAsync(dk, maPhong.Value);
             if (loi is not null)
             {
@@ -102,7 +99,7 @@ public class PhanPhongController(AppDbContext db) : BaseController
         }
         catch (DbUpdateException ex)
         {
-            // Trigger/ràng buộc ở CSDL cũng chặn các trường hợp này; hiển thị lý do cụ thể.
+
             ModelState.AddModelError(string.Empty, "Không thể phân phòng: " + ex.GetBaseException().Message);
             return View(await TaoViewModelPhanPhongAsync(dk, maPhong));
         }

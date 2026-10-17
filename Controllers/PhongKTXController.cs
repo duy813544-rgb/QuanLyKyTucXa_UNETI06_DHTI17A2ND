@@ -41,7 +41,7 @@ public class PhongKTXController(AppDbContext db) : BaseController
         ViewBag.LaAdmin = LaAdmin;
         if (LaAdmin)
         {
-            // Danh sách người đang ở và lịch sử phòng chỉ hiển thị cho quản trị viên.
+
             ViewBag.DangO = await db.PhanPhongs.AsNoTracking()
                 .Include(x => x.DangKyKTX).ThenInclude(x => x.SinhVien)
                 .Where(x => x.MaPhong == id && x.TrangThai == TrangThaiPhanPhong.DangO)

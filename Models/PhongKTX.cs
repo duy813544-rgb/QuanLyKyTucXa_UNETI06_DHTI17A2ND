@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
 
-/// <summary>Entity PhongKTX theo đề. Số chỗ còn KHÔNG lưu: tính từ sức chứa và số PhanPhong đang ở.</summary>
+
 public partial class PhongKTX
 {
     [Key]

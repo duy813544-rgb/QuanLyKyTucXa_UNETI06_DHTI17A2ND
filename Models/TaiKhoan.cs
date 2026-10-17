@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
 
-/// <summary>Entity TaiKhoan theo đề. Quan hệ 1-1 với SinhVien (vai trò SinhVien).</summary>
 public partial class TaiKhoan
 {
     [Key]

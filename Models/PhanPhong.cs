@@ -4,10 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
 
-/// <summary>
-/// Entity PhanPhong theo đề: lưu lịch sử ở thực tế. Không sửa MaPhong của bản ghi cũ khi chuyển phòng;
-/// không xóa bản ghi đã phát sinh nghiệp vụ.
-/// </summary>
+
 public partial class PhanPhong
 {
     [Key]

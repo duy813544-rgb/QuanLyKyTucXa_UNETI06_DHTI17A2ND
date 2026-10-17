@@ -46,7 +46,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             e.Property(x => x.DiaChi).HasMaxLength(200);
             e.Property(x => x.TrangThai).HasMaxLength(20).HasDefaultValue("DangHoatDong");
 
-            // Quan hệ 1-1. Không cascade: xóa tài khoản không được xóa hồ sơ/lịch sử.
+
             e.HasOne(x => x.TaiKhoan).WithOne(x => x.SinhVien)
                 .HasForeignKey<SinhVien>(x => x.MaTaiKhoan)
                 .OnDelete(DeleteBehavior.Restrict)

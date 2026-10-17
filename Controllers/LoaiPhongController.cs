@@ -55,7 +55,6 @@ public class LoaiPhongController(AppDbContext db) : BaseController
         model.TenLoaiPhong = model.TenLoaiPhong.Trim();
         await KiemTraTrungTenAsync(model, id);
 
-        // Không giảm sức chứa xuống dưới số người đang ở của các phòng thuộc loại này.
         if (model.SoNguoiToiDa < loai.SoNguoiToiDa && ModelState.IsValid)
         {
             var phongVuotCho = await PhongTruyVan.KemSoCho(db)
@@ -84,7 +83,6 @@ public class LoaiPhongController(AppDbContext db) : BaseController
         var loai = await db.LoaiPhongs.FirstOrDefaultAsync(x => x.MaLoaiPhong == id);
         if (loai is null) return NotFound();
 
-        // Không xóa khi đã có phòng hoặc đăng ký tham chiếu, để không mất dữ liệu liên quan.
         var coPhong = await db.PhongKTXs.AnyAsync(x => x.MaLoaiPhong == id);
         var coDangKy = await db.DangKyKTXs.AnyAsync(x => x.NguyenVongLoaiPhong == id);
         if (coPhong || coDangKy)
