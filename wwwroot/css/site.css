@@ -2,7 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap');
 
-
+/* ---------- 1. Biến màu & nền tảng ---------- */
 :root {
     --primary: #8c9bff;
     --primary-strong: #6d7ff0;
@@ -92,7 +92,7 @@ a {
     font-size: 11.5px;
 }
 
-
+/* ---------- 2. Khung ứng dụng (sidebar) ---------- */
 .shell {
     min-height: 100vh;
 }
@@ -202,6 +202,7 @@ a {
     flex-direction: column;
 }
 
+/* ---------- 3. Thanh trên (topbar) ---------- */
 .topbar {
     position: sticky;
     top: 0;
@@ -2205,3 +2206,732 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font: inherit;
     cursor: pointer;
 }
+
+/* ---------- 18. Giao diện sáng: nền xanh nhạt, thẻ trắng, bo góc mềm ---------- */
+.theme-sang,
+.auth-body,
+.auth-page {
+    background: linear-gradient(180deg, #f5f9ff, #eef4fd) !important;
+    color: #0f2a52;
+}
+
+    .auth-page::before, .auth-page::after {
+        display: none !important;
+    }
+
+.scn-inline, .scn-stage {
+    display: none !important;
+}
+
+.auth-brand-mark {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6) !important;
+    color: #fff !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 18px -8px #3b82f6 !important;
+}
+
+.auth-brand b {
+    color: #0f2a52 !important;
+}
+
+.auth-brand small {
+    color: #6b7fa3 !important;
+}
+
+.pill-trangthai {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #d7f5ea;
+    color: #0a8f6a;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: 9px 16px;
+    border-radius: 99px;
+    margin-bottom: 26px;
+}
+
+    .pill-trangthai i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #10b981;
+    }
+
+.auth-intro h1 {
+    color: #0f2a52 !important;
+    font-size: 50px !important;
+    line-height: 1.12 !important;
+    max-width: none !important;
+    font-weight: 800 !important;
+    letter-spacing: -.02em !important;
+}
+
+    .auth-intro h1 .grad {
+        background: linear-gradient(90deg, #60a5fa, #1d4ed8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent !important;
+    }
+
+.auth-intro p {
+    color: #5b6f94 !important;
+    font-size: 18px !important;
+}
+
+.minhhoa {
+    margin-top: -6px;
+    max-width: 800px;
+}
+
+    .minhhoa svg {
+        display: block;
+    }
+
+.choices-side .eyebrow-home {
+    color: #6b7fa3 !important;
+    font-weight: 700;
+    letter-spacing: .08em;
+    border: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 18px !important;
+}
+
+.choice {
+    display: grid !important;
+    grid-template-columns: 82px 1fr 30px !important;
+    align-items: center !important;
+    gap: 20px !important;
+    background: rgba(255, 255, 255, .85) !important;
+    border: 1px solid #dfe9f7 !important;
+    border-radius: 20px !important;
+    padding: 22px 26px !important;
+    margin-bottom: 18px !important;
+    box-shadow: 0 10px 30px -18px rgba(30, 64, 175, .35) !important;
+    color: #0f2a52 !important;
+}
+
+    .choice:hover {
+        transform: translateY(-2px);
+    }
+
+.choice-num {
+    display: none !important;
+}
+
+.choice-icon {
+    width: 82px;
+    height: 82px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+}
+
+    .choice-icon.xanh-dương {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+
+    .choice-icon.xanh-lá {
+        background: #d1fae5;
+        color: #059669;
+    }
+
+.choice b {
+    color: #0f2a52 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+}
+
+.choice small {
+    color: #5b6f94 !important;
+    font-size: 15px !important;
+}
+
+.choice-arrow {
+    color: #2563eb !important;
+    font-size: 24px !important;
+}
+
+.choice:last-of-type .choice-arrow {
+    color: #059669 !important;
+}
+
+.auth-card, .register-card {
+    background: rgba(255, 255, 255, .9) !important;
+    border: 1px solid #dfe9f7 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px -18px rgba(30, 64, 175, .35) !important;
+    color: #0f2a52 !important;
+}
+
+    .auth-card input, .auth-card select {
+        background: #fff !important;
+        border: 1px solid #dfe9f7 !important;
+        border-radius: 12px !important;
+        color: #0f2a52 !important;
+    }
+
+        .auth-card input:focus, .auth-card select:focus {
+            border-color: #60a5fa !important;
+            outline: none;
+        }
+
+.auth-submit {
+    background: #2563eb !important;
+    color: #fff !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+}
+
+.auth-footer {
+    color: #6b7fa3 !important;
+}
+
+    .auth-footer span {
+        color: #9fb0cc !important;
+    }
+
+@media (max-width: 860px) {
+    .auth-main {
+        grid-template-columns: 1fr !important;
+        gap: 32px !important;
+    }
+
+    .auth-intro h1 {
+        font-size: 40px !important;
+    }
+
+    .minhhoa {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 620px) {
+    .auth-intro {
+        display: block !important;
+    }
+
+        .auth-intro h1 {
+            font-size: 32px !important;
+        }
+
+    .minhhoa {
+        display: none;
+    }
+
+    .choice {
+        grid-template-columns: 64px 1fr 24px !important;
+        gap: 14px !important;
+        padding: 18px !important;
+    }
+
+    .choice-icon {
+        width: 64px;
+        height: 64px;
+    }
+}
+
+/* =====================================================================
+   19. GIAO DIỆN SÁNG CUỐI CÙNG: nền trắng, chữ đen, chữ quan trọng màu xanh
+   Khối này ghi đè toàn bộ giao diện tối ở trên.
+   ===================================================================== */
+:root {
+    --primary: #2563eb;
+    --primary-strong: #1d4ed8;
+    --primary-soft: #eff6ff;
+    --primary-ring: rgba(37, 99, 235, .22);
+    --amber: #2563eb;
+    --amber-deep: #1d4ed8;
+    --amber-soft: #eff6ff;
+    --ink: #111827;
+    --text: #1f2937;
+    --muted: #4b5563;
+    --faint: #6b7280;
+    --line: #e5e7eb;
+    --line-soft: #f1f3f7;
+    --line-input: #d1d5db;
+    --surface: #ffffff;
+    --surface-hover: #f8fafc;
+    --ok: #047857;
+    --ok-bg: #ecfdf5;
+    --warn: #b45309;
+    --warn-bg: #fffbeb;
+    --bad: #b91c1c;
+    --bad-bg: #fef2f2;
+    --info: #1d4ed8;
+    --info-bg: #eff6ff;
+    --shadow: 0 6px 24px -12px rgba(15, 23, 42, .12);
+    color-scheme: light;
+}
+
+body {
+    background: #ffffff;
+    color: var(--text);
+}
+
+    body .auth-page,
+    body.auth-body,
+    body .theme-sang {
+        background: #ffffff !important;
+        color: #111827;
+    }
+
+    /* Chữ chung */
+    body h1, body h2, body h3, body strong, body b {
+        color: #111827;
+    }
+
+    body .muted, body .auth-subtitle, body .auth-intro-content > p,
+    body .auth-intro p, body .auth-footer, body .auth-card-foot,
+    body .auth-divider, body .auth-header-action, body .cell-sub,
+    body .subtle, body .stat > small, body .empty, body .pagination,
+    body .auth-label-row span, body .auth-footer span {
+        color: var(--muted) !important;
+    }
+
+        body .eyebrow, body .auth-form-kicker, body .choices-side .eyebrow-home,
+        body .auth-kicker, body .auth-intro h1 em, body .auth-intro h1 .grad,
+        body .auth-header-action a, body .password-toggle,
+        body .auth-intro h1 .grad, body .lock-icon {
+            color: #2563eb !important;
+        }
+
+    /* Đầu trang và thương hiệu */
+    body .auth-header {
+        background: transparent;
+    }
+
+    body .auth-brand, body .brand {
+        color: #111827 !important;
+    }
+
+        body .auth-brand small, body .brand small, body .auth-brand-mark + span small {
+            color: var(--muted) !important;
+        }
+
+    body .auth-brand-mark, body .brand-mark {
+        background: #2563eb !important;
+        color: #ffffff !important;
+        box-shadow: 0 6px 14px -6px rgba(37, 99, 235, .55);
+    }
+
+    /* Trang chủ / đăng nhập / đăng ký */
+    body .auth-intro h1 {
+        color: #111827 !important;
+    }
+
+        body .auth-intro h1 .grad,
+        body .auth-intro h1 em {
+            color: #2563eb !important;
+            background: none;
+            -webkit-text-fill-color: #2563eb;
+        }
+
+    body .auth-kicker {
+        background: #eff6ff !important;
+        border: 1px solid #bfdbfe !important;
+        color: #1d4ed8 !important;
+    }
+
+        body .auth-kicker i {
+            background: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, .15);
+        }
+
+    body .pill-trangthai {
+        background: #eff6ff !important;
+        color: #1d4ed8 !important;
+    }
+
+        body .pill-trangthai i {
+            background: #2563eb !important;
+        }
+
+    body .auth-back {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        color: #111827 !important;
+    }
+
+        body .auth-back:hover {
+            border-color: #2563eb !important;
+            color: #2563eb !important;
+            background: #eff6ff !important;
+        }
+
+    body .auth-header-action span:first-child {
+        color: var(--muted) !important;
+    }
+
+    body .auth-header-action a {
+        background: #ffffff !important;
+        border: 1px solid #bfdbfe !important;
+        color: #2563eb !important;
+    }
+
+        body .auth-header-action a:hover {
+            background: #eff6ff !important;
+            border-color: #2563eb !important;
+        }
+
+    /* Lựa chọn trên trang chủ */
+    body .choice {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        color: #111827 !important;
+        box-shadow: 0 6px 20px -14px rgba(15, 23, 42, .18) !important;
+    }
+
+        body .choice:hover {
+            border-color: #2563eb !important;
+        }
+
+        body .choice b {
+            color: #111827 !important;
+        }
+
+        body .choice small {
+            color: var(--muted) !important;
+        }
+
+    body .choice-arrow {
+        color: #2563eb !important;
+    }
+
+    body .choice-icon.xanh-dương {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+
+    body .choice-icon.xanh-lá {
+        background: #d1fae5;
+        color: #047857;
+    }
+
+    /* Thẻ biểu mẫu */
+    body .auth-card, body .register-card {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        color: #111827 !important;
+        box-shadow: 0 10px 30px -18px rgba(15, 23, 42, .18) !important;
+    }
+
+        body .auth-card h2 {
+            color: #111827 !important;
+        }
+
+    body .auth-form > label, body .auth-field > label,
+    body .auth-label-row label {
+        color: #111827 !important;
+    }
+
+    body .auth-card input, body .auth-card select, body .auth-card textarea,
+    body input, body select, body textarea {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        color: #111827 !important;
+    }
+
+        body input::placeholder, body textarea::placeholder {
+            color: #9ca3af !important;
+        }
+
+        body .auth-card input:focus, body .auth-card select:focus,
+        body input:focus, body select:focus, body textarea:focus {
+            border-color: #2563eb !important;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .15) !important;
+        }
+
+    body .auth-input .input-icon {
+        color: #6b7280 !important;
+    }
+
+    body .auth-input:focus-within .input-icon {
+        color: #2563eb !important;
+    }
+
+    body .auth-submit, body .primary, body .button.primary {
+        background: #2563eb !important;
+        color: #ffffff !important;
+        box-shadow: 0 8px 18px -10px rgba(37, 99, 235, .7) !important;
+    }
+
+        body .auth-submit:hover, body .primary:hover, body .button.primary:hover {
+            background: #1d4ed8 !important;
+            color: #ffffff !important;
+        }
+
+    body .auth-register-link, body .secondary {
+        background: #ffffff !important;
+        border: 1px solid #d1d5db !important;
+        color: #111827 !important;
+    }
+
+        body .auth-register-link:hover, body .secondary:hover {
+            border-color: #2563eb !important;
+            color: #2563eb !important;
+            background: #eff6ff !important;
+        }
+
+    body .auth-validation:not(:empty), body .validation, body .auth-validation {
+        background: #fef2f2 !important;
+        border-color: #fecaca !important;
+        color: #b91c1c !important;
+    }
+
+    body .field-validation {
+        color: #b91c1c !important;
+    }
+
+    body .auth-success {
+        background: #ecfdf5 !important;
+        border-color: #a7f3d0 !important;
+        color: #047857 !important;
+    }
+
+    /* Thanh bên và thanh trên (ứng dụng sau đăng nhập) */
+    body .sidebar {
+        background: #ffffff !important;
+        border-right: 1px solid #e5e7eb !important;
+        box-shadow: none !important;
+    }
+
+    body .nav-caption {
+        color: var(--faint) !important;
+    }
+
+    body .nav-link {
+        color: #374151 !important;
+    }
+
+        body .nav-link:hover, body .nav-link:focus-visible {
+            background: #f3f4f6 !important;
+            color: #111827 !important;
+        }
+
+        body .nav-link.is-active {
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+            font-weight: 600;
+            box-shadow: inset 3px 0 0 #2563eb !important;
+        }
+
+    body .sidebar-foot {
+        color: var(--faint) !important;
+        border-top: 1px solid #e5e7eb !important;
+    }
+
+    body .topbar {
+        background: #ffffff !important;
+        border-bottom: 1px solid #e5e7eb !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+        body .topbar strong {
+            color: #111827 !important;
+        }
+
+    body .user-area b {
+        color: #111827 !important;
+    }
+
+    body .user-area small {
+        color: var(--muted) !important;
+    }
+
+    body .avatar {
+        background: #2563eb !important;
+        color: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    body .user-menu > summary:hover, body .user-menu[open] > summary {
+        background: #f3f4f6 !important;
+    }
+
+    body .user-dropdown {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        box-shadow: 0 16px 36px -16px rgba(15, 23, 42, .2) !important;
+    }
+
+        body .user-dropdown a, body .user-dropdown button {
+            color: #111827 !important;
+        }
+
+            body .user-dropdown a:hover, body .user-dropdown button:hover {
+                background: #f3f4f6 !important;
+                color: #2563eb !important;
+            }
+
+    body .logout {
+        color: var(--muted) !important;
+    }
+
+        body .logout:hover {
+            background: #f3f4f6 !important;
+            color: #111827 !important;
+        }
+
+    /* Thẻ thống kê, bảng, hộp */
+    body .stat, body .table-card, body .form-card, body .filter-card {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        box-shadow: var(--shadow) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+        body .stat:hover {
+            background: #f8fafc !important;
+        }
+
+        body .stat > strong, body .form-grid strong, body td b {
+            color: #111827 !important;
+        }
+
+        body .stat > span {
+            color: var(--muted) !important;
+        }
+
+    body th {
+        background: #f9fafb !important;
+        color: #4b5563 !important;
+        border-bottom: 1px solid #e5e7eb !important;
+    }
+
+    body td {
+        color: #1f2937 !important;
+        border-top: 1px solid #f1f3f7 !important;
+    }
+
+    body tbody tr:hover td {
+        background: #f8fafc !important;
+    }
+
+    body .date-pill {
+        background: #f3f4f6 !important;
+        border: 1px solid #e5e7eb !important;
+        color: #4b5563 !important;
+    }
+
+    body .table-action, body .decision-actions button {
+        color: #2563eb !important;
+    }
+
+        body .table-action:hover {
+            background: #eff6ff !important;
+            color: #1d4ed8 !important;
+        }
+
+        body .table-action.reject, body .decision-actions .reject {
+            color: #b91c1c !important;
+        }
+
+            body .table-action.reject:hover {
+                background: #fef2f2 !important;
+            }
+
+    /* Màu huy hiệu và biểu tượng thống kê */
+    body .blue {
+        background: #dbeafe !important;
+        color: #1d4ed8 !important;
+    }
+
+    body .violet {
+        background: #ede9fe !important;
+        color: #6d28d9 !important;
+    }
+
+    body .amber {
+        background: #fef3c7 !important;
+        color: #b45309 !important;
+    }
+
+    body .green {
+        background: #d1fae5 !important;
+        color: #047857 !important;
+    }
+
+    body .success {
+        background: #ecfdf5 !important;
+        color: #047857 !important;
+    }
+
+    body .pending {
+        background: #fffbeb !important;
+        color: #b45309 !important;
+    }
+
+    body .danger {
+        background: #fef2f2 !important;
+        color: #b91c1c !important;
+    }
+
+    body .notice {
+        background: #eff6ff !important;
+        border: 1px solid #bfdbfe !important;
+        color: #1e3a8a !important;
+    }
+
+        body .notice.error-notice {
+            background: #fef2f2 !important;
+            border-color: #fecaca !important;
+            color: #991b1b !important;
+        }
+
+        body .notice::before {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        body .notice.error-notice::before {
+            background: #b91c1c;
+            color: #ffffff;
+        }
+
+    body .auth-footer {
+        border-top: none;
+    }
+
+    /* Hộp thông tin cá nhân */
+    body .profile-dialog {
+        background: #ffffff !important;
+        color: #111827 !important;
+        border: 1px solid #e5e7eb !important;
+    }
+
+        body .profile-dialog::backdrop {
+            background: rgba(17, 24, 39, .35);
+        }
+
+    body .profile-top b, body .profile-head b {
+        color: #111827 !important;
+    }
+
+    body .profile-head small, body .profile-list dt {
+        color: var(--muted) !important;
+    }
+
+    body .profile-list dd {
+        color: #111827 !important;
+    }
+
+    body .profile-close {
+        background: #ffffff !important;
+        color: #111827 !important;
+        border: 1px solid #d1d5db !important;
+    }
+
+    /* Đảm bảo cảnh 3D (không dùng trên nền sáng) bị ẩn */
+    body .scn-inline {
+        display: none !important;
+    }
+
+    /* Chữ không bị chìm trên nền trắng */
+    body .auth-card *, body .form-card *, body .table-card * {
+        text-shadow: none;
+    }

@@ -9,7 +9,6 @@ namespace DoAnNhom06.Controllers;
 
 public class AccountController(AppDbContext db) : BaseController
 {
-    /// <summary>Trang chủ giới thiệu: người chưa đăng nhập chọn Đăng nhập hoặc Đăng ký.</summary>
     [HttpGet]
     public IActionResult Welcome() => SignedIn ? RedirectToAction("Index", "Home") : View();
 
@@ -38,7 +37,7 @@ public class AccountController(AppDbContext db) : BaseController
         var taiKhoan = await db.TaiKhoans.AsNoTracking().Include(x => x.SinhVien)
             .FirstOrDefaultAsync(x => x.TenDangNhap == tenDangNhap);
 
-        // Thông báo chung khi sai tài khoản hoặc sai mật khẩu, để không cho dò tên đăng nhập.
+
         if (taiKhoan is null || taiKhoan.MatKhau != password)
         {
             ModelState.AddModelError(string.Empty, "Sai tên đăng nhập hoặc mật khẩu.");
@@ -76,7 +75,6 @@ public class AccountController(AppDbContext db) : BaseController
     [HttpGet]
     public IActionResult Register() => SignedIn ? RedirectToAction("Index", "Home") : View(new DangKyTaiKhoanViewModel());
 
-    /// <summary>Sinh viên tự tạo tài khoản: tạo TaiKhoan và SinhVien trong một giao dịch.</summary>
     [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(DangKyTaiKhoanViewModel model)
     {
@@ -122,7 +120,7 @@ public class AccountController(AppDbContext db) : BaseController
         return RedirectToAction(nameof(Login));
     }
 
-    /// <summary>Thông tin cá nhân đầy đủ, trả về dạng khung nhỏ để hiện trong hộp thoại.</summary>
+
     [HttpGet]
     [RequireRole(VaiTro.Admin, VaiTro.SinhVien)]
     public async Task<IActionResult> Profile()

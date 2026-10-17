@@ -1,29 +1,33 @@
 @{
     ViewData["Title"] = "Trang chủ";
-} 
+}
 
-<div class="auth-page">
+<div class="auth-page theme-sang">
     <header class="auth-header">
         <a class="auth-brand" asp-controller="Account" asp-action="Welcome"><span class="auth-brand-mark">K</span><span><b>Ký túc xá</b><small>CỔNG THÔNG TIN NỘI TRÚ</small></span></a>
     </header>
     <main class="auth-main">
         <section class="auth-intro">
             <div class="auth-intro-content">
-                <span class="auth-kicker"><i></i> HỆ THỐNG QUẢN LÝ NỘI TRÚ</span>
-                <h1>Một nơi cho <em>mọi hành trình</em> ở ký túc xá.</h1>
-                <p>Đăng ký chỗ ở, theo dõi hồ sơ và các khoản phí của bạn một cách rõ ràng, thuận tiện.</p>
+                <span class="pill-trangthai"><i></i> HỆ THỐNG QUẢN LÝ NỘI TRÚ</span>
+                <h1>Một nơi an tâm,<br><span class="grad">một hành trình trưởng thành.</span></h1>
+                <p>Đăng ký chỗ ở, quản lý hồ sơ và theo dõi các khoản phí dễ dàng, thuận tiện.</p>
             </div>
             @await Html.PartialAsync("_Minhhoa")
         </section>
         <section class="choices-side">
             <p class="eyebrow-home">CHỌN CÁCH BẠN MUỐN TIẾP TỤC</p>
             <a class="choice" asp-controller="Account" asp-action="Login">
-                <span class="choice-num">01</span>
+                <span class="choice-icon xanh-dương">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>
+                </span>
                 <span><b>Đăng nhập</b><small>Bạn đã có tài khoản sinh viên</small></span>
                 <span class="choice-arrow">→</span>
             </a>
             <a class="choice" asp-controller="Account" asp-action="Register">
-                <span class="choice-num">02</span>
+                <span class="choice-icon xanh-lá">
+                    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
+                </span>
                 <span><b>Đăng ký</b><small>Tạo hồ sơ và tài khoản mới</small></span>
                 <span class="choice-arrow">→</span>
             </a>
