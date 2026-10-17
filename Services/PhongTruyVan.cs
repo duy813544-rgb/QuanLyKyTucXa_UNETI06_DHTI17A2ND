@@ -1,5 +1,3 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
 using DoAnNhom06.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,12 +32,17 @@ public static class PhongTruyVan
 
         if (!vm.LaAdmin) q = q.Where(x => x.TrangThai == TrangThaiPhong.DangSuDung);
 
-        // Tìm kiếm theo tên phòng
+
+        // Tìm kiếm theo tên phòng hoặc tên tòa nhà
         if (!string.IsNullOrWhiteSpace(vm.Q))
         {
             var tuKhoa = vm.Q.Trim();
-            q = q.Where(x => x.TenPhong.Contains(tuKhoa));
+
+            q = q.Where(x =>
+                x.TenPhong.Contains(tuKhoa) ||
+                x.ToaNha.Contains(tuKhoa));
         }
+
 
         // Lọc theo tòa nhà, tầng, loại phòng, giới tính, trạng thái, còn chỗ/hết chỗ
         if (!string.IsNullOrWhiteSpace(vm.ToaNha)) q = q.Where(x => x.ToaNha == vm.ToaNha);

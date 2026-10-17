@@ -1,5 +1,5 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+//Trần văn cường
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace DoAnNhom06.Models;
@@ -41,7 +41,10 @@ public partial class PhongKTX
     [DataType(DataType.MultilineText)]
     public string? MoTa { get; set; }
 
+
+    [ValidateNever]
     public virtual LoaiPhong LoaiPhong { get; set; } = null!;
 
     public virtual ICollection<PhanPhong> PhanPhongs { get; set; } = new List<PhanPhong>();
+
 }

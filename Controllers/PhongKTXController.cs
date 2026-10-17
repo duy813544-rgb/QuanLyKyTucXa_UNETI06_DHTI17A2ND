@@ -1,5 +1,3 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
 using DoAnNhom06.Filters;
 using DoAnNhom06.Models;
 using DoAnNhom06.Services;
