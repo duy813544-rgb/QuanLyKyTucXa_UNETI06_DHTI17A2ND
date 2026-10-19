@@ -106,27 +106,33 @@ public class ThongKeController(AppDbContext db) : BaseController
             ? theoSoNguoi.Where(x => x.DangO == soNguoiMax).ToList()
             : [];
 
-        // Số sinh viên đang ở theo tòa và theo loại phòng: GroupBy trên truy vấn EF Core.
-        var theoToa = await db.PhanPhongs.AsNoTracking()
-            .Where(x => x.TrangThai == TrangThaiPhanPhong.DangO)
-            .GroupBy(x => x.PhongKTX.ToaNha)
-            .Select(g => new SinhVienTheoToa(g.Key, g.Count()))
+        // Số sinh viên đang ở theo tòa và theo loại phòng: GroupBy + Count chạy trên SQL,
+        // phần tạo record và sắp xếp làm trong bộ nhớ (EF Core không dịch OrderBy trên record dựng bằng constructor).
+        var theoToa = (await db.PhanPhongs.AsNoTracking()
+                .Where(x => x.TrangThai == TrangThaiPhanPhong.DangO)
+                .GroupBy(x => x.PhongKTX.ToaNha)
+                .Select(g => new { ToaNha = g.Key, SoLuong = g.Count() })
+                .ToListAsync())
+            .Select(x => new SinhVienTheoToa(x.ToaNha, x.SoLuong))
             .OrderBy(x => x.ToaNha)
-            .ToListAsync();
+            .ToList();
 
-        var theoLoaiSv = await db.PhanPhongs.AsNoTracking()
-            .Where(x => x.TrangThai == TrangThaiPhanPhong.DangO)
-            .GroupBy(x => x.PhongKTX.LoaiPhong.TenLoaiPhong)
-            .Select(g => new SinhVienTheoLoai(g.Key, g.Count()))
+        var theoLoaiSv = (await db.PhanPhongs.AsNoTracking()
+                .Where(x => x.TrangThai == TrangThaiPhanPhong.DangO)
+                .GroupBy(x => x.PhongKTX.LoaiPhong.TenLoaiPhong)
+                .Select(g => new { TenLoai = g.Key, SoLuong = g.Count() })
+                .ToListAsync())
+            .Select(x => new SinhVienTheoLoai(x.TenLoai, x.SoLuong))
             .OrderBy(x => x.TenLoai)
-            .ToListAsync();
+            .ToList();
 
-        var theoTrangThaiDk = await db.DangKyKTXs.AsNoTracking()
-            .GroupBy(x => x.TrangThai)
-            .Select(g => new DangKyTheoTrangThai(g.Key, g.Count()))
+        var theoTrangThaiDk = (await db.DangKyKTXs.AsNoTracking()
+                .GroupBy(x => x.TrangThai)
+                .Select(g => new { TrangThai = g.Key, SoLuong = g.Count() })
+                .ToListAsync())
+            .Select(x => new DangKyTheoTrangThai(x.TrangThai, x.SoLuong))
             .OrderBy(x => x.TrangThai)
-            .ToListAsync();
-
+            .ToList();
         // Vào KTX theo tháng: lấy (ngày vào, mã sinh viên) rồi gom trong bộ nhớ,
         // không phụ thuộc cách EF Core dịch DateOnly sang SQL.
         var luotVao = await db.PhanPhongs.AsNoTracking()

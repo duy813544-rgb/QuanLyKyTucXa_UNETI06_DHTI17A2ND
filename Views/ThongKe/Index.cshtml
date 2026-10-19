@@ -27,16 +27,45 @@
 </div>
 
 <div class="stats">
-    <div class="stat"><span>Tổng số chỗ</span><strong>@Model.TongCho</strong><small>Tổng sức chứa phòng đang sử dụng</small></div>
-    <div class="stat"><span>Chỗ đang sử dụng</span><strong>@Model.ChoDangSuDung</strong><small>Số PhanPhong đang ở</small></div>
-    <div class="stat"><span>Chỗ còn lại</span><strong>@Model.ChoConLai</strong><small>Tổng chỗ − chỗ đang dùng</small></div>
-    <div class="stat"><span>Tỷ lệ sử dụng</span><strong>@Model.TyLeSuDung.ToString("0.#")%</strong><small>Chỗ đang dùng / tổng chỗ × 100</small></div>
+    <div class="stat">
+        <span>Tổng số chỗ</span>
+        <strong>@Model.TongCho</strong>
+        <small>Tổng sức chứa phòng đang sử dụng</small>
+    </div>
+    <div class="stat">
+        <span>Chỗ đang sử dụng</span>
+        <strong>@Model.ChoDangSuDung</strong>
+        <small>Số chỗ đang ở</small>
+    </div>
+    <div class="stat">
+        <span>Chỗ còn lại</span>
+        <strong>@Model.ChoConLai</strong>
+        <small>Tổng chỗ − chỗ đang dùng</small>
+    </div>
+    <div class="stat">
+        <span>Tỷ lệ sử dụng</span>
+        <strong>@Model.TyLeSuDung.ToString("0.#")%</strong>
+        <small>Chỗ đang dùng / tổng chỗ × 100</small>
+    </div>
 </div>
 
-<div class="section-heading" style="margin-top:22px"><div><h2>Số phòng và tỷ lệ sử dụng theo loại phòng</h2></div></div>
+<div class="section-heading" style="margin-top:22px">
+    <div>
+        <h2>Số phòng và tỷ lệ sử dụng theo loại phòng</h2>
+        </div>
+</div>
 <div class="table-card">
     <table>
-        <thead><tr><th>LOẠI PHÒNG</th><th>SỐ PHÒNG</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TỶ LỆ SỬ DỤNG</th></tr></thead>
+        <thead>
+            <tr>
+                <th>LOẠI PHÒNG</th>
+                <th>SỐ PHÒNG</th>
+                <th>SỨC CHỨA</th>
+                <th>ĐANG Ở</th>
+                <th>CHỖ CÒN</th>
+                <th>TỶ LỆ SỬ DỤNG</th>
+            </tr>
+        </thead>
         <tbody>
             @if (!Model.SoPhongTheoLoai.Any())
             {
@@ -44,7 +73,14 @@
             }
             @foreach (var r in Model.SoPhongTheoLoai)
             {
-                <tr><td>@r.TenLoai</td><td>@r.SoPhong</td><td>@r.SucChua</td><td>@r.DangO</td><td>@r.ConLai</td><td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td></tr>
+                <tr>
+                    <td>@r.TenLoai</td>
+                    <td>@r.SoPhong</td>
+                    <td>@r.SucChua</td>
+                    <td>@r.DangO</td>
+                    <td>@r.ConLai</td>
+                    <td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -53,7 +89,16 @@
 <div class="section-heading" style="margin-top:22px"><div><h2>Tỷ lệ sử dụng theo tòa</h2></div></div>
 <div class="table-card">
     <table>
-        <thead><tr><th>TÒA</th><th>SỐ PHÒNG</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TỶ LỆ SỬ DỤNG</th></tr></thead>
+        <thead>
+            <tr>
+                <th>TÒA</th>
+                <th>SỐ PHÒNG</th>
+                <th>SỨC CHỨA</th>
+                <th>ĐANG Ở</th>
+                <th>CHỖ CÒN</th>
+                <th>TỶ LỆ SỬ DỤNG</th>
+            </tr>
+        </thead>
         <tbody>
             @if (!Model.TyLeTheoToa.Any())
             {
@@ -61,7 +106,14 @@
             }
             @foreach (var r in Model.TyLeTheoToa)
             {
-                <tr><td>@r.ToaNha</td><td>@r.SoPhong</td><td>@r.SucChua</td><td>@r.DangO</td><td>@r.ConLai</td><td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td></tr>
+                <tr>
+                    <td>@r.ToaNha</td>
+                    <td>@r.SoPhong</td>
+                    <td>@r.SucChua</td>
+                    <td>@r.DangO</td>
+                    <td>@r.ConLai</td>
+                    <td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -78,7 +130,16 @@
 </div>
 <div class="table-card">
     <table>
-        <thead><tr><th>PHÒNG</th><th>TÒA</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TỶ LỆ SỬ DỤNG</th></tr></thead>
+        <thead>
+            <tr>
+                <th>PHÒNG</th>
+                <th>TÒA</th>
+                <th>SỨC CHỨA</th>
+                <th>ĐANG Ở</th>
+                <th>CHỖ CÒN</th>
+                <th>TỶ LỆ SỬ DỤNG</th>
+            </tr>
+        </thead>
         <tbody>
             @if (!Model.PhongTheoSoNguoi.Any())
             {
@@ -102,7 +163,12 @@
 <div class="stats" style="margin-top:22px">
     <div class="table-card" style="padding:0">
         <div style="padding:16px 18px"><h2 style="margin:0">Sinh viên đang ở theo tòa</h2></div><table>
-        <thead><tr><th>TÒA</th><th>SỐ SINH VIÊN</th></tr></thead>
+        <thead>
+            <tr>
+                <th>TÒA</th>
+                <th>SỐ SINH VIÊN</th>
+            </tr>
+        </thead>
         <tbody>
             @if (!Model.SinhVienTheoToa.Any())
             {
@@ -117,7 +183,12 @@
 </div>
 <div class="table-card" style="padding:0">
     <div style="padding:16px 18px"><h2 style="margin:0">Sinh viên đang ở theo loại phòng</h2></div><table>
-    <thead><tr><th>LOẠI PHÒNG</th><th>SỐ SINH VIÊN</th></tr></thead>
+    <thead>
+        <tr>
+            <th>LOẠI PHÒNG</th>
+            <th>SỐ SINH VIÊN</th>
+        </tr>
+    </thead>
     <tbody>
         @if (!Model.SinhVienTheoLoai.Any())
         {
@@ -132,7 +203,12 @@
 </div>
 <div class="table-card" style="padding:0">
     <div style="padding:16px 18px"><h2 style="margin:0">Đăng ký theo trạng thái</h2></div><table>
-    <thead><tr><th>TRẠNG THÁI</th><th>SỐ ĐĂNG KÝ</th></tr></thead>
+    <thead>
+        <tr>
+            <th>TRẠNG THÁI</th>
+            <th>SỐ ĐĂNG KÝ</th>
+        </tr>
+    </thead>
     <tbody>
         @if (!Model.DangKyTheoTrangThai.Any())
         {
@@ -148,10 +224,13 @@
 </div>
 
 <div class="section-heading" style="margin-top:22px">
-    <div><h2>Sinh viên vào KTX theo tháng năm @Model.Nam</h2><p class="muted">Số lượt vào tính cả chuyển phòng; số sinh viên là số người khác nhau.</p></div>
-    <form method="get" asp-action="Index" class="toolbar-inline">
+    <div>
+        <h2>Sinh viên vào KTX theo tháng năm @Model.Nam</h2>
+        <p class="muted">Số lượt vào tính cả chuyển phòng; số sinh viên là số người khác nhau.</p>
+    </div>
+    <form method="get" asp-action="Index" class="toolbar-inline" id="formNam">
         <label class="muted" for="nam">Năm</label>
-        <select id="nam" name="nam" onchange="this.form.submit()">
+        <select id="nam" name="nam">
             @if (!Model.CacNam.Contains(Model.Nam))
             {
                 <option value="@Model.Nam" selected>@Model.Nam</option>
