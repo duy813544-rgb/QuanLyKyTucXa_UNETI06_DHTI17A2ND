@@ -1,5 +1,6 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+// Họ và tên: Nguyễn Bá Hùng
+// Mã sinh viên: 23274800011
+// Nội dung thực hiện: Module 4- Quản lý phân phòng KTX:    
 using System.Data;
 using DoAnNhom06.Filters;
 using DoAnNhom06.Models;

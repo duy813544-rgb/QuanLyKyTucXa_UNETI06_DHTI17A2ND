@@ -1,5 +1,6 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+// Họ và tên: Nguyễn Bá Hùng
+// Mã sinh viên: 23274800011
+// Nội dung thực hiện: Dashboard và thống kê bằng LINQ (Module 4):  
 using DoAnNhom06.Filters;
 using DoAnNhom06.Models;
 using DoAnNhom06.Services;

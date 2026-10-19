@@ -1,54 +1,105 @@
 @model PhanPhongIndexViewModel
-@{ ViewData["Title"] = "Phân phòng / chuyển / trả phòng"; }
+@{
+    ViewData["Title"] = "Phân phòng / chuyển / trả phòng";
+}
+
 <div class="section-heading page-heading">
-    <div><span class="eyebrow">MODULE 4 · PHÂN PHÒNG</span><h1>Phân phòng, chuyển phòng, trả phòng</h1><p class="muted">Mỗi lần ở là một bản ghi lịch sử. Chuyển hoặc trả phòng không xóa bản ghi cũ.</p></div>
+    <div>
+        <span class="eyebrow">MODULE 4 · PHÂN PHÒNG</span>
+        <h1>Phân phòng, chuyển phòng, trả phòng</h1>
+        <p class="muted">Mỗi lần ở là một bản ghi lịch sử. Chuyển hoặc trả phòng không xóa bản ghi cũ.</p>
+    </div>
 </div>
+
 <form method="get" class="search-row">
-    <input name="q" value="@Model.Q" placeholder="Tìm theo mã, họ tên sinh viên hoặc tên phòng"/>
+    <input name="q" value="@Model.Q" placeholder="Tìm theo mã, họ tên sinh viên hoặc tên phòng" />
     <button class="button secondary" type="submit">Tìm</button>
 </form>
 
-<div class="section-heading"><div><h2>Đăng ký chờ phân phòng (@Model.ChoDuyet.Count)</h2></div></div>
+@* ===== Đăng ký chờ phân phòng ===== *@
+<div class="section-heading">
+    <div><h2>Đăng ký chờ phân phòng (@Model.ChoDuyet.Count)</h2></div>
+</div>
 <div class="table-card">
     <table>
-        <thead><tr><th>MÃ ĐĂNG KÝ</th><th>SINH VIÊN</th><th>THỜI GIAN DỰ KIẾN</th><th>NGUYỆN VỌNG</th><th></th></tr></thead>
-        <tbody>
-        @if (!Model.ChoDuyet.Any()) { <tr><td colspan="5" class="empty">Không có đơn chờ phân phòng.</td></tr> }
-        @foreach (var dk in Model.ChoDuyet)
-        {
+        <thead>
             <tr>
-                <td>#@dk.MaDangKy</td>
-                <td><b>@dk.SinhVien.HoTen</b><span class="cell-sub">@dk.MaSinhVien · @dk.SinhVien.GioiTinh</span></td>
-                <td>@dk.NgayBatDau.ToString("dd/MM/yyyy") → @dk.NgayKetThucDuKien.ToString("dd/MM/yyyy")</td>
-                <td>@(dk.NguyenVong?.TenLoaiPhong ?? "—")</td>
-                <td><a class="table-action" asp-action="Assign" asp-route-maDangKy="@dk.MaDangKy">Chọn phòng</a></td>
+                <th>MÃ ĐĂNG KÝ</th>
+                <th>SINH VIÊN</th>
+                <th>THỜI GIAN DỰ KIẾN</th>
+                <th>NGUYỆN VỌNG</th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @if (!Model.ChoDuyet.Any())
+            {
+                <tr>
+                    <td colspan="5" class="empty">Không có đơn chờ phân phòng.</td>
+                </tr>
+            }
+            @foreach (var dk in Model.ChoDuyet)
+            {
+                <tr>
+                    <td>#@dk.MaDangKy</td>
+                    <td>
+                        <b>@dk.SinhVien.HoTen</b>
+                        <span class="cell-sub">@dk.MaSinhVien · @dk.SinhVien.GioiTinh</span>
+                    </td>
+                    <td>@dk.NgayBatDau.ToString("dd/MM/yyyy") → @dk.NgayKetThucDuKien.ToString("dd/MM/yyyy")</td>
+                    <td>@(dk.NguyenVong?.TenLoaiPhong ?? "—")</td>
+                    <td>
+                        <a class="table-action" asp-action="Assign" asp-route-maDangKy="@dk.MaDangKy">Chọn phòng</a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>
 
-<div class="section-heading" style="margin-top:24px"><div><h2>Sinh viên đang ở (@Model.DangO.Count)</h2></div></div>
+@* ===== Sinh viên đang ở ===== *@
+<div class="section-heading" style="margin-top:24px">
+    <div><h2>Sinh viên đang ở (@Model.DangO.Count)</h2></div>
+</div>
 <div class="table-card">
     <table>
-        <thead><tr><th>SINH VIÊN</th><th>PHÒNG</th><th>LOẠI · TÒA · TẦNG</th><th>NGÀY VÀO</th><th></th></tr></thead>
-        <tbody>
-        @if (!Model.DangO.Any()) { <tr><td colspan="5" class="empty">Hiện chưa có sinh viên đang ở.</td></tr> }
-        @foreach (var pp in Model.DangO)
-        {
+        <thead>
             <tr>
-                <td><b>@pp.DangKyKTX.SinhVien.HoTen</b><span class="cell-sub">@pp.DangKyKTX.MaSinhVien</span></td>
-                <td><a asp-controller="PhongKTX" asp-action="Details" asp-route-id="@pp.MaPhong">@pp.PhongKTX.TenPhong</a></td>
-                <td>@pp.PhongKTX.LoaiPhong.TenLoaiPhong · @pp.PhongKTX.ToaNha · Tầng @pp.PhongKTX.Tang</td>
-                <td>@pp.NgayVao.ToString("dd/MM/yyyy")</td>
-                <td class="decision-actions">
-                    <a class="table-action" asp-action="Move" asp-route-id="@pp.MaPhanPhong">Chuyển phòng</a>
-                    <form asp-action="CheckOut" asp-route-id="@pp.MaPhanPhong" method="post" onsubmit="return confirm('Xác nhận trả phòng?')">
-                        <button class="table-action reject" type="submit">Trả phòng</button>
-                    </form>
-                </td>
+                <th>SINH VIÊN</th>
+                <th>PHÒNG</th>
+                <th>LOẠI · TÒA · TẦNG</th>
+                <th>NGÀY VÀO</th>
+                <th></th>
             </tr>
-        }
+        </thead>
+        <tbody>
+            @if (!Model.DangO.Any())
+            {
+                <tr>
+                    <td colspan="5" class="empty">Hiện chưa có sinh viên đang ở.</td>
+                </tr>
+            }
+            @foreach (var pp in Model.DangO)
+            {
+                <tr>
+                    <td>
+                        <b>@pp.DangKyKTX.SinhVien.HoTen</b>
+                        <span class="cell-sub">@pp.DangKyKTX.MaSinhVien</span>
+                    </td>
+                    <td>
+                        <a asp-controller="PhongKTX" asp-action="Details" asp-route-id="@pp.MaPhong">@pp.PhongKTX.TenPhong</a>
+                    </td>
+                    <td>@pp.PhongKTX.LoaiPhong.TenLoaiPhong · @pp.PhongKTX.ToaNha · Tầng @pp.PhongKTX.Tang</td>
+                    <td>@pp.NgayVao.ToString("dd/MM/yyyy")</td>
+                    <td class="decision-actions">
+                        <a class="table-action" asp-action="Move" asp-route-id="@pp.MaPhanPhong">Chuyển phòng</a>
+                        <form asp-action="CheckOut" asp-route-id="@pp.MaPhanPhong" method="post"
+                              onsubmit="return confirm('Xác nhận trả phòng?')">
+                            <button class="table-action reject" type="submit">Trả phòng</button>
+                        </form>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

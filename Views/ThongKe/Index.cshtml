@@ -202,7 +202,10 @@
 </table>
 </div>
 <div class="table-card" style="padding:0">
-    <div style="padding:16px 18px"><h2 style="margin:0">Đăng ký theo trạng thái</h2></div><table>
+    <div style="padding:16px 18px">
+        <h2 style="margin:0">Đăng ký theo trạng thái</h2>
+    </div>
+ <table>
     <thead>
         <tr>
             <th>TRẠNG THÁI</th>
@@ -216,7 +219,10 @@
         }
         @foreach (var r in Model.DangKyTheoTrangThai)
         {
-            <tr><td>@Nhan.NhanDangKy(r.TrangThai)</td><td>@r.SoLuong</td></tr>
+            <tr>
+                <td>@Nhan.NhanDangKy(r.TrangThai)</td>
+                <td>@r.SoLuong</td>
+            </tr>
         }
     </tbody>
 </table>
@@ -254,11 +260,21 @@
         }
     </div>
     <table>
-        <thead><tr><th>THÁNG</th><th>SỐ LƯỢT VÀO</th><th>SỐ SINH VIÊN</th></tr></thead>
+        <thead>
+            <tr>
+                <th>THÁNG</th>
+                <th>SỐ LƯỢT VÀO</th>
+                <th>SỐ SINH VIÊN</th>
+            </tr>
+        </thead>
         <tbody>
             @foreach (var r in Model.VaoKtxTheoThang)
             {
-                <tr><td>@r.Thang.ToString("00")/@r.Nam</td><td>@r.SoLuot</td><td>@r.SoSinhVien</td></tr>
+                <tr>
+                    <td>@r.Thang.ToString("00")/@r.Nam</td>
+                    <td>@r.SoLuot</td>
+                    <td>@r.SoSinhVien</td>
+                </tr>
             }
         </tbody>
     </table>

@@ -1,15 +1,47 @@
 @model DashboardViewModel
 @{ ViewData["Title"] = "Tổng quan"; }
-<div class="section-heading page-heading"><div><span class="eyebrow">DASHBOARD</span><h1>Tổng quan ký túc xá</h1><p class="muted">Số liệu lấy trực tiếp từ cơ sở dữ liệu tại thời điểm xem.</p></div></div>
+<div class="section-heading page-heading"><div><span class="eyebrow">DASHBOARD</span>
+    <h1>Tổng quan ký túc xá</h1>
+    <p class="muted">Số liệu lấy trực tiếp từ cơ sở dữ liệu tại thời điểm xem.</p>
+</div>
+</div>
 <div class="stats">
-    <div class="stat"><span class="stat-icon blue">▦</span><span>Tổng số phòng</span><strong>@Model.TongPhong</strong><a class="table-action" asp-controller="PhongKTX" asp-action="Index">Xem phòng</a></div>
-    <div class="stat"><span class="stat-icon violet">♙</span><span>Tổng số sinh viên</span><strong>@Model.TongSinhVien</strong><a class="table-action" asp-controller="SinhVien" asp-action="Index">Xem sinh viên</a></div>
-    <div class="stat"><span class="stat-icon amber">◷</span><span>Đăng ký chờ duyệt</span><strong>@Model.DangKyChoDuyet</strong><small>Tổng đăng ký: @Model.TongDangKy</small><a class="table-action" asp-controller="DangKyKTX" asp-action="Index">Duyệt đăng ký</a></div>
-    <div class="stat"><span class="stat-icon green">⇄</span><span>Sinh viên đang ở KTX</span><strong>@Model.SinhVienDangO</strong><a class="table-action" asp-controller="PhanPhong" asp-action="Index">Phân phòng</a></div>
+    <div class="stat">
+        <span class="stat-icon blue">▦</span>
+            <span>
+                Tổng số phòng</span>
+                <strong>@Model.TongPhong</strong>
+                <a class="table-action" asp-controller="PhongKTX" asp-action="Index">Xem phòng</a>
+     </div>
+    <div class="stat">
+        <span class="stat-icon violet">♙</span>
+        <span>Tổng số sinh viên</span><strong>@Model.TongSinhVien</strong>
+        <a class="table-action" asp-controller="SinhVien" asp-action="Index">Xem sinh viên</a>
+    </div>
+    <div class="stat"><span class="stat-icon amber">◷</span>
+        <span>Đăng ký chờ duyệt</span><strong>@Model.DangKyChoDuyet</strong>
+        <small>Tổng đăng ký: @Model.TongDangKy</small>
+        <a class="table-action" asp-controller="DangKyKTX" asp-action="Index">Duyệt đăng ký</a>
+    </div>
+    <div class="stat"><span class="stat-icon green">⇄</span>
+        <span>Sinh viên đang ở KTX</span><strong>@Model.SinhVienDangO</strong>
+        <a class="table-action" asp-controller="PhanPhong" asp-action="Index">Phân phòng</a>
+    </div>
 </div>
 <div class="stats" style="margin-top:16px">
-    <div class="stat"><span class="stat-icon blue">▤</span><span>Tổng số chỗ</span><strong>@Model.TongCho</strong><small>Tổng sức chứa của phòng đang sử dụng</small></div>
-    <div class="stat"><span class="stat-icon violet">●</span><span>Chỗ đang sử dụng</span><strong>@Model.ChoDangSuDung</strong><small>Số PhanPhong đang ở</small></div>
-    <div class="stat"><span class="stat-icon green">○</span><span>Chỗ còn trống</span><strong>@Model.ChoConTrong</strong><small>Tổng chỗ - chỗ đang sử dụng</small></div>
-    <div class="stat"><span class="stat-icon amber">!</span><span>Phòng đã đủ người</span><strong>@Model.PhongDayDu</strong><small>Không còn chỗ nhận thêm</small></div>
+    <div class="stat"><span class="stat-icon blue">▤</span>
+        <span>Tổng số chỗ</span><strong>@Model.TongCho</strong>
+        <small>Tổng sức chứa của phòng đang sử dụng</small></div>
+    <div class="stat"><span class="stat-icon violet">●</span>
+        <span>Chỗ đang sử dụng</span><strong>@Model.ChoDangSuDung</strong>
+        <small>Số PhanPhong đang ở</small>
+    </div>
+    <div class="stat"><span class="stat-icon green">○</span>
+        <span>Chỗ còn trống</span><strong>@Model.ChoConTrong</strong>
+        <small>Tổng chỗ - chỗ đang sử dụng</small>
+    </div>
+    <div class="stat"><span class="stat-icon amber">!</span>
+        <span>Phòng đã đủ người</span><strong>@Model.PhongDayDu</strong>
+        <small>Không còn chỗ nhận thêm</small>
+    </  div>
 </div>
