@@ -182,30 +182,50 @@ public class ChuyenPhongViewModel
     public List<PhongRow> PhongPhuHop { get; set; } = [];
     public int? MaPhongMoi { get; set; }
 }
-
-public record SoPhongTheoLoai(string TenLoai, int SoPhong, int SucChua, int DangO);
-public record PhongTheoSoNguoi(string TenPhong, string ToaNha, int SucChua, int DangO, int ConLai);
-public record SinhVienTheoToa(string ToaNha, int SoSinhVien);
-public record SinhVienTheoLoai(string TenLoai, int SoSinhVien);
-public record DangKyTheoTrangThai(string TrangThai, int SoLuong);
-public record VaoKtxTheoThang(int Nam, int Thang, int SoLuot);
+public record SoPhongTheoLoai(string TenLoai, int SoPhong, int SucChua, int DangO)
+{
+    public int ConLai => SucChua - DangO;
+    /// <summary>Tỷ lệ sử dụng = đang ở / sức chứa x 100. Trả 0 khi sức chứa bằng 0.</summary>
+    public double TyLe => SucChua == 0 ? 0 : Math.Round(DangO * 100.0 / SucChua, 1);
+}
+public record PhongTheoSoNguoi(string TenPhong, string ToaNha, int SucChua, int DangO, int ConLai)
+{
+    public double TyLe => SucChua == 0 ? 0 : Math.Round(DangO * 100.0 / SucChua, 1);
+}
+    /// <summary>Thống kê theo tòa: số phòng, sức chứa, số người đang ở của các phòng đang sử dụng.</summary>
+public record TyLeTheoToa(string ToaNha, int SoPhong, int SucChua, int DangO)
+{
+    public int ConLai => SucChua - DangO;
+    public double TyLe => SucChua == 0 ? 0 : Math.Round(DangO * 100.0 / SucChua, 1);
+}
+    public record SinhVienTheoToa(string ToaNha, int SoSinhVien);
+    public record SinhVienTheoLoai(string TenLoai, int SoSinhVien);
+    public record DangKyTheoTrangThai(string TrangThai, int SoLuong);
+    /// <summary>SoLuot = số bản ghi PhanPhong tạo trong tháng (gồm cả chuyển phòng); SoSinhVien = số sinh viên khác nhau.</summary>
+public record VaoKtxTheoThang(int Nam, int Thang, int SoLuot, int SoSinhVien);
 
 public class ThongKeViewModel
 {
     public List<SoPhongTheoLoai> SoPhongTheoLoai { get; set; } = [];
     public List<PhongTheoSoNguoi> PhongTheoSoNguoi { get; set; } = [];
+    public List<TyLeTheoToa> TyLeTheoToa { get; set; } = [];
     public List<SinhVienTheoToa> SinhVienTheoToa { get; set; } = [];
     public List<SinhVienTheoLoai> SinhVienTheoLoai { get; set; } = [];
     public List<DangKyTheoTrangThai> DangKyTheoTrangThai { get; set; } = [];
+
+    /// <summary>12 tháng của năm đang chọn (tháng không có dữ liệu = 0).</summary>
     public List<VaoKtxTheoThang> VaoKtxTheoThang { get; set; } = [];
-    public PhongTheoSoNguoi? PhongDongNhat { get; set; }
+    public int Nam { get; set; }
+    public List<int> CacNam { get; set; } = [];
+
+    /// <summary>Có thể có nhiều phòng cùng số người đang ở cao nhất.</summary>
+    public List<PhongTheoSoNguoi> PhongDongNhat { get; set; } = [];
     public int TongCho { get; set; }
     public int ChoDangSuDung { get; set; }
     public int ChoConLai { get; set; }
     /// <summary>Tỷ lệ = chỗ đang sử dụng / tổng chỗ x 100. Trả 0 khi tổng chỗ bằng 0.</summary>
     public double TyLeSuDung => TongCho == 0 ? 0 : Math.Round(ChoDangSuDung * 100.0 / TongCho, 1);
 }
-
 public class DashboardViewModel
 {
     public int TongPhong { get; set; }

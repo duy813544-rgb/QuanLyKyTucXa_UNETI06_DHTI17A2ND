@@ -1,57 +1,186 @@
 @model ThongKeViewModel
-@{ ViewData["Title"] = "Thống kê"; }
-<div class="section-heading page-heading"><div><span class="eyebrow">MODULE 4 · THỐNG KÊ</span><h1>Thống kê ký túc xá</h1><p class="muted">Tính bằng LINQ từ cơ sở dữ liệu tại thời điểm xem.</p></div></div>
+@{
+    ViewData["Title"] = "Thống kê";
+    // Màu thanh tỷ lệ: >= 100% đỏ (đầy), >= 80% vàng (gần đầy), còn lại xanh.
+    // <<< TỰ SỬA: ngưỡng 80 / 100 nếu muốn đổi mức cảnh báo
+    string MauThanh(double v) => v >= 100 ? "bad" : v >= 80 ? "warn" : "";
+    var cotCaoNhat = Math.Max(1, Model.VaoKtxTheoThang.Max(x => x.SoLuot));
+}
+@functions {
+    public static Microsoft.AspNetCore.Html.IHtmlContent Thanh(double tyLe, string mau)
+    {
+        var rong = Math.Min(100, tyLe).ToString("0.#", System.Globalization.CultureInfo.InvariantCulture);
+        return new Microsoft.AspNetCore.Html.HtmlString(
+            $"<div class=\"meter\"><span class=\"meter-track\"><span class=\"meter-fill {mau}\" style=\"width:{rong}%\"></span></span><span class=\"meter-val\">{tyLe:0.#}%</span></div>");
+    }
+}
+
+<div class="section-heading page-heading">
+    <div>
+        <span class="eyebrow">MODULE 4 · THỐNG KÊ</span>
+        <h1>Thống kê ký túc xá</h1>
+        <p class="muted">Tính bằng LINQ từ cơ sở dữ liệu tại thời điểm xem.</p>
+    </div>
+    <div class="toolbar-inline">
+        <a class="button secondary" asp-action="XuatExcel" asp-route-nam="@Model.Nam">⇩ Xuất Excel</a>
+    </div>
+</div>
 
 <div class="stats">
     <div class="stat"><span>Tổng số chỗ</span><strong>@Model.TongCho</strong><small>Tổng sức chứa phòng đang sử dụng</small></div>
     <div class="stat"><span>Chỗ đang sử dụng</span><strong>@Model.ChoDangSuDung</strong><small>Số PhanPhong đang ở</small></div>
     <div class="stat"><span>Chỗ còn lại</span><strong>@Model.ChoConLai</strong><small>Tổng chỗ − chỗ đang dùng</small></div>
-    <div class="stat"><span>Tỷ lệ sử dụng</span><strong>@Model.TyLeSuDung%</strong><small>Chỗ đang dùng / tổng chỗ × 100</small></div>
+    <div class="stat"><span>Tỷ lệ sử dụng</span><strong>@Model.TyLeSuDung.ToString("0.#")%</strong><small>Chỗ đang dùng / tổng chỗ × 100</small></div>
 </div>
 
-<div class="section-heading" style="margin-top:22px"><div><h2>Số phòng theo loại</h2></div></div>
-<div class="table-card"><table>
-    <thead><tr><th>LOẠI PHÒNG</th><th>SỐ PHÒNG</th><th>TỔNG SỨC CHỨA</th><th>ĐANG Ở</th></tr></thead>
-    <tbody>
-    @if (!Model.SoPhongTheoLoai.Any()) { <tr><td colspan="4" class="empty">Chưa có dữ liệu.</td></tr> }
-    @foreach (var r in Model.SoPhongTheoLoai) { <tr><td>@r.TenLoai</td><td>@r.SoPhong</td><td>@r.SucChua</td><td>@r.DangO</td></tr> }
-    </tbody></table></div>
+<div class="section-heading" style="margin-top:22px"><div><h2>Số phòng và tỷ lệ sử dụng theo loại phòng</h2></div></div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>LOẠI PHÒNG</th><th>SỐ PHÒNG</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TỶ LỆ SỬ DỤNG</th></tr></thead>
+        <tbody>
+            @if (!Model.SoPhongTheoLoai.Any())
+            {
+                <tr><td colspan="6" class="empty">Chưa có dữ liệu.</td></tr>
+            }
+            @foreach (var r in Model.SoPhongTheoLoai)
+            {
+                <tr><td>@r.TenLoai</td><td>@r.SoPhong</td><td>@r.SucChua</td><td>@r.DangO</td><td>@r.ConLai</td><td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-<div class="section-heading" style="margin-top:22px"><div><h2>Số người đang ở và chỗ còn lại từng phòng</h2>
-    @if (Model.PhongDongNhat is { } dn) { <p class="muted">Phòng đông nhất: <b>@dn.TenPhong</b> (@dn.DangO người)</p> }
-</div></div>
-<div class="table-card"><table>
-    <thead><tr><th>PHÒNG</th><th>TÒA</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th></tr></thead>
-    <tbody>
-    @if (!Model.PhongTheoSoNguoi.Any()) { <tr><td colspan="5" class="empty">Chưa có phòng.</td></tr> }
-    @foreach (var r in Model.PhongTheoSoNguoi) { <tr><td>@r.TenPhong</td><td>@r.ToaNha</td><td>@r.SucChua</td><td>@r.DangO</td><td><span class="badge @(r.ConLai > 0 ? "success" : "danger")">@r.ConLai</span></td></tr> }
-    </tbody></table></div>
+<div class="section-heading" style="margin-top:22px"><div><h2>Tỷ lệ sử dụng theo tòa</h2></div></div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>TÒA</th><th>SỐ PHÒNG</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TỶ LỆ SỬ DỤNG</th></tr></thead>
+        <tbody>
+            @if (!Model.TyLeTheoToa.Any())
+            {
+                <tr><td colspan="6" class="empty">Chưa có dữ liệu.</td></tr>
+            }
+            @foreach (var r in Model.TyLeTheoToa)
+            {
+                <tr><td>@r.ToaNha</td><td>@r.SoPhong</td><td>@r.SucChua</td><td>@r.DangO</td><td>@r.ConLai</td><td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="section-heading" style="margin-top:22px">
+    <div>
+        <h2>Số người đang ở và chỗ còn lại từng phòng</h2>
+        @if (Model.PhongDongNhat.Any())
+        {
+            <p class="muted">Phòng đông nhất (@Model.PhongDongNhat[0].DangO người): <b>@string.Join(", ", Model.PhongDongNhat.Select(x => x.TenPhong))</b></p>
+        }
+    </div>
+</div>
+<div class="table-card">
+    <table>
+        <thead><tr><th>PHÒNG</th><th>TÒA</th><th>SỨC CHỨA</th><th>ĐANG Ở</th><th>CHỖ CÒN</th><th>TỶ LỆ SỬ DỤNG</th></tr></thead>
+        <tbody>
+            @if (!Model.PhongTheoSoNguoi.Any())
+            {
+                <tr><td colspan="6" class="empty">Chưa có phòng.</td></tr>
+            }
+            @foreach (var r in Model.PhongTheoSoNguoi)
+            {
+                <tr>
+                    <td>@r.TenPhong</td>
+                    <td>@r.ToaNha</td>
+                    <td>@r.SucChua</td>
+                    <td>@r.DangO</td>
+                    <td><span class="badge @(r.ConLai > 0 ? "success" : "danger")">@r.ConLai</span></td>
+                    <td>@Thanh(r.TyLe, MauThanh(r.TyLe))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
 <div class="stats" style="margin-top:22px">
-    <div class="table-card" style="padding:0"><div style="padding:16px 18px"><h2 style="margin:0">Sinh viên đang ở theo tòa</h2></div><table>
+    <div class="table-card" style="padding:0">
+        <div style="padding:16px 18px"><h2 style="margin:0">Sinh viên đang ở theo tòa</h2></div><table>
         <thead><tr><th>TÒA</th><th>SỐ SINH VIÊN</th></tr></thead>
         <tbody>
-        @if (!Model.SinhVienTheoToa.Any()) { <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr> }
-        @foreach (var r in Model.SinhVienTheoToa) { <tr><td>@r.ToaNha</td><td>@r.SoSinhVien</td></tr> }
-        </tbody></table></div>
-    <div class="table-card" style="padding:0"><div style="padding:16px 18px"><h2 style="margin:0">Sinh viên đang ở theo loại phòng</h2></div><table>
-        <thead><tr><th>LOẠI PHÒNG</th><th>SỐ SINH VIÊN</th></tr></thead>
-        <tbody>
-        @if (!Model.SinhVienTheoLoai.Any()) { <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr> }
-        @foreach (var r in Model.SinhVienTheoLoai) { <tr><td>@r.TenLoai</td><td>@r.SoSinhVien</td></tr> }
-        </tbody></table></div>
-    <div class="table-card" style="padding:0"><div style="padding:16px 18px"><h2 style="margin:0">Đăng ký theo trạng thái</h2></div><table>
-        <thead><tr><th>TRẠNG THÁI</th><th>SỐ ĐĂNG KÝ</th></tr></thead>
-        <tbody>
-        @if (!Model.DangKyTheoTrangThai.Any()) { <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr> }
-        @foreach (var r in Model.DangKyTheoTrangThai) { <tr><td>@Nhan.NhanDangKy(r.TrangThai)</td><td>@r.SoLuong</td></tr> }
-        </tbody></table></div>
+            @if (!Model.SinhVienTheoToa.Any())
+            {
+                <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr>
+            }
+            @foreach (var r in Model.SinhVienTheoToa)
+            {
+                <tr><td>@r.ToaNha</td><td>@r.SoSinhVien</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="table-card" style="padding:0">
+    <div style="padding:16px 18px"><h2 style="margin:0">Sinh viên đang ở theo loại phòng</h2></div><table>
+    <thead><tr><th>LOẠI PHÒNG</th><th>SỐ SINH VIÊN</th></tr></thead>
+    <tbody>
+        @if (!Model.SinhVienTheoLoai.Any())
+        {
+            <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr>
+        }
+        @foreach (var r in Model.SinhVienTheoLoai)
+        {
+            <tr><td>@r.TenLoai</td><td>@r.SoSinhVien</td></tr>
+        }
+    </tbody>
+</table>
+</div>
+<div class="table-card" style="padding:0">
+    <div style="padding:16px 18px"><h2 style="margin:0">Đăng ký theo trạng thái</h2></div><table>
+    <thead><tr><th>TRẠNG THÁI</th><th>SỐ ĐĂNG KÝ</th></tr></thead>
+    <tbody>
+        @if (!Model.DangKyTheoTrangThai.Any())
+        {
+            <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr>
+        }
+        @foreach (var r in Model.DangKyTheoTrangThai)
+        {
+            <tr><td>@Nhan.NhanDangKy(r.TrangThai)</td><td>@r.SoLuong</td></tr>
+        }
+    </tbody>
+</table>
+</div>
 </div>
 
-<div class="section-heading" style="margin-top:22px"><div><h2>Sinh viên vào KTX theo tháng</h2></div></div>
-<div class="table-card"><table>
-    <thead><tr><th>THÁNG</th><th>SỐ LƯỢT VÀO</th></tr></thead>
-    <tbody>
-    @if (!Model.VaoKtxTheoThang.Any()) { <tr><td colspan="2" class="empty">Chưa có dữ liệu.</td></tr> }
-    @foreach (var r in Model.VaoKtxTheoThang) { <tr><td>@r.Thang/@r.Nam</td><td>@r.SoLuot</td></tr> }
-    </tbody></table></div>
+<div class="section-heading" style="margin-top:22px">
+    <div><h2>Sinh viên vào KTX theo tháng năm @Model.Nam</h2><p class="muted">Số lượt vào tính cả chuyển phòng; số sinh viên là số người khác nhau.</p></div>
+    <form method="get" asp-action="Index" class="toolbar-inline">
+        <label class="muted" for="nam">Năm</label>
+        <select id="nam" name="nam" onchange="this.form.submit()">
+            @if (!Model.CacNam.Contains(Model.Nam))
+            {
+                <option value="@Model.Nam" selected>@Model.Nam</option>
+            }
+            @foreach (var y in Model.CacNam)
+            {
+                <option value="@y" selected="@(y == Model.Nam)">@y</option>
+            }
+        </select>
+    </form>
+</div>
+<div class="table-card">
+    <div class="month-chart">
+        @foreach (var r in Model.VaoKtxTheoThang)
+        {
+            <div class="month-col" title="Tháng @r.Thang: @r.SoLuot lượt, @r.SoSinhVien sinh viên">
+                <b>@r.SoLuot</b>
+                <span class="bar" style="height:@((int)Math.Round(r.SoLuot * 100.0 / cotCaoNhat))%"></span>
+                <small>T@(r.Thang)</small>
+            </div>
+        }
+    </div>
+    <table>
+        <thead><tr><th>THÁNG</th><th>SỐ LƯỢT VÀO</th><th>SỐ SINH VIÊN</th></tr></thead>
+        <tbody>
+            @foreach (var r in Model.VaoKtxTheoThang)
+            {
+                <tr><td>@r.Thang.ToString("00")/@r.Nam</td><td>@r.SoLuot</td><td>@r.SoSinhVien</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
