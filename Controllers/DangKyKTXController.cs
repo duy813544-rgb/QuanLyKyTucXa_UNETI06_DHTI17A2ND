@@ -52,6 +52,12 @@ public class DangKyKTXController(AppDbContext db) : BaseController
     [HttpGet, RequireRole(VaiTro.SinhVien)]
     public async Task<IActionResult> Create()
     {
+        if ((bool)(ViewBag.CoDangKyHieuLuc ?? false))
+        {
+            TempData["Loi"] = "Bạn đã có đăng ký đang hiệu lực, không thể đăng ký thêm.";
+            return RedirectToAction(nameof(Index));
+        }
+
         var homNay = DateOnly.FromDateTime(DateTime.Now);
         await NapDanhSachLoaiAsync();
         return View(new DangKyKTXCreateViewModel { NgayBatDau = homNay, NgayKetThucDuKien = homNay.AddMonths(6) });
@@ -153,4 +159,5 @@ public class DangKyKTXController(AppDbContext db) : BaseController
         ViewBag.LoaiPhongs = await db.LoaiPhongs.AsNoTracking()
             .Where(x => x.TrangThai == TrangThaiLoaiPhong.DangSuDung)
             .OrderBy(x => x.TenLoaiPhong).ToListAsync();
+
 }

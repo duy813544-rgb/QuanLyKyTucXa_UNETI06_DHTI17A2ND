@@ -34,8 +34,15 @@
                     }
                     else
                     {
+                        var coDangKy = (bool?)ViewBag.CoDangKyHieuLuc ?? false;
+
                         <a class="nav-link" asp-controller="PhongKTX" asp-action="Index">▦ <span>Danh sách Phòng ký túc xá</span></a>
-                        <a class="nav-link" asp-controller="DangKyKTX" asp-action="Create">＋ <span>Đăng ký ở KTX</span></a>
+
+                        @if (!coDangKy)
+                        {
+                            <a class="nav-link" asp-controller="DangKyKTX" asp-action="Create">＋ <span>Đăng ký ở KTX</span></a>
+                        }
+
                         <a class="nav-link" asp-controller="DangKyKTX" asp-action="Index">◷ <span>Thông tin phòng Đăng ký </span></a>
                     }
 
@@ -58,8 +65,7 @@
                             <button type="button" id="btnProfile">Thông tin cá nhân</button>
                             <form asp-controller="Account" asp-action="Logout" method="post">
                                 <button type="submit" class="btn-logout" title="Đăng xuất">
-                                    <span class="btn-logout-text">Đăng xuất</span>
-                                   
+                                    <span class="btn-logout-text">Đăng xuất</span>          
                                 </button>
                             </form>
                         </div>

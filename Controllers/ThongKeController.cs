@@ -9,7 +9,7 @@ using DoAnNhom06.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace DoAnNhom06.Controllers;   // <<< TỰ SỬA nếu nhóm đổi namespace theo quy định đặt tên project
+namespace DoAnNhom06.Controllers;   
 
 [RequireRole(VaiTro.Admin)]
 public class ThongKeController(AppDbContext db) : BaseController
