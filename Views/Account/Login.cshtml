@@ -12,7 +12,7 @@
             <div class="auth-intro-content">
                 <a class="auth-back" asp-controller="Account" asp-action="Welcome">← Quay lại trang chủ</a>
                 <span class="auth-kicker"><i></i> HỆ THỐNG QUẢN LÝ NỘI TRÚ</span>
-                <h1>Một nơi cho <em>mọi hành trình</em> ở ký túc xá.</h1>
+                <h1>Một nơi cho ký túc xá.</h1>
                 <p>Đăng ký chỗ ở, theo dõi hồ sơ và các khoản phí của bạn một cách rõ ràng, thuận tiện.</p>
             </div>
             @await Html.PartialAsync("_Minhhoa")
@@ -20,7 +20,6 @@
         <section class="auth-form-side">
             <div class="auth-card">
                 <div class="auth-mobile-mark">K</div>
-                <span class="auth-form-kicker">CHÀO MỪNG BẠN TRỞ LẠI</span>
                 <h2>Đăng nhập</h2>
                 <p class="auth-subtitle">Nhập thông tin tài khoản để tiếp tục.</p>
                 @if (TempData["ThongBao"] is string success) { <div class="auth-success">@success</div> }
@@ -29,7 +28,7 @@
                     <div asp-validation-summary="ModelOnly" class="auth-validation"></div>
                     <label for="username">Tên đăng nhập</label>
                     <div class="auth-input"><svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><input id="username" name="username" value="@ViewBag.Username" autocomplete="username" placeholder="Ví dụ: sv001" required autofocus/></div>
-                    <div class="auth-label-row"><label for="password">Mật khẩu</label><span>Bảo mật tài khoản của bạn</span></div>
+                    <div class="auth-label-row"><label for="password">Mật khẩu</label></div>
                     <div class="auth-input"><svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu" required/><button class="password-toggle" type="button" aria-label="Hiện mật khẩu" data-password-toggle="password">Hiện</button></div>
                     <button class="auth-submit" type="submit"><span>Đăng nhập</span><b>→</b></button>
                 </form>
