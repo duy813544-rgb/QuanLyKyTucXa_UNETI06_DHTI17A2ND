@@ -1,10 +1,7 @@
 //Trần văn cường
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
-
 namespace DoAnNhom06.Models;
-
-
 public partial class PhongKTX
 {
     [Key]
@@ -32,19 +29,14 @@ public partial class PhongKTX
     [StringLength(10)]
     [Display(Name = "Giới tính phòng")]
     public string GioiTinhPhong { get; set; } = null!;
-
     [Required]
     [StringLength(20)]
     public string TrangThai { get; set; } = "DangSuDung";
-
     [StringLength(250)]
     [DataType(DataType.MultilineText)]
     public string? MoTa { get; set; }
-
-
     [ValidateNever]
     public virtual LoaiPhong LoaiPhong { get; set; } = null!;
-
     public virtual ICollection<PhanPhong> PhanPhongs { get; set; } = new List<PhanPhong>();
 
 }
