@@ -17,17 +17,28 @@ Công nghệ: ASP.NET Core 10 MVC · Entity Framework Core 10 · SQL Server · R
 
 
 DoAnNhom06/
+
 ├── Controllers/        Xử lý yêu cầu: Account, TaiKhoan, LoaiPhong, PhongKTX, SinhVien,
 │                       DangKyKTX, PhanPhong, ThongKe, Home, Base
+
 ├── Models/             Thực thể dữ liệu và ViewModel (PhongKTX, SinhVien, DangKyKTX, TaiKhoan, LoaiPhong, PhanPhong...)
+
 ├── Data/               AppDbContext.cs – cấu hình EF Core và kết nối CSDL
+
 ├── Services/           PhongTruyVan.cs – truy vấn phòng và số chỗ còn trống
+
 ├── Filters/            RequireRoleAttribute.cs – kiểm tra quyền truy cập theo vai trò
+
 ├── Helpers/            Hàm tiện ích dùng chung (mã sinh viên, định dạng, thông báo)
+
 ├── Views/              Giao diện Razor theo từng chức năng, Shared/ là layout và thành phần chung
+
 ├── wwwroot/            File tĩnh: css/site.css, thư viện JS/CSS
+
 ├── Program.cs          Điểm khởi động ứng dụng, đăng ký dịch vụ và đường dẫn
+
 ├── appsettings.json    Chuỗi kết nối CSDL (ConnectionStrings:KyTucXa)
+
 └── Properties/         launchSettings.json – cổng chạy ứng dụng
 
 
