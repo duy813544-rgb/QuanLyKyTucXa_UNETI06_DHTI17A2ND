@@ -1,5 +1,4 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+
 namespace DoAnNhom06.Models;
 
 
