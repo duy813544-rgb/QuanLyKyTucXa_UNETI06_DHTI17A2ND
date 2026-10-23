@@ -9,7 +9,7 @@
     <div class="form-grid">
         <div><label asp-for="TenLoaiPhong"></label><input asp-for="TenLoaiPhong" required/><span asp-validation-for="TenLoaiPhong" class="field-error"></span></div>
         <div><label asp-for="SoNguoiToiDa"></label><input asp-for="SoNguoiToiDa" type="number" min="1" required/><span asp-validation-for="SoNguoiToiDa" class="field-error"></span></div>
-        <div><label asp-for="DonGiaThang"></label><input asp-for="DonGiaThang" type="number" min="1" step="1000" required/><span asp-validation-for="DonGiaThang" class="field-error"></span></div>
+        <div><label asp-for="DonGiaThang"></label><input asp-for="DonGiaThang" type="number" min="1" step="any" required/><span asp-validation-for="DonGiaThang" class="field-error"></span></div>
         <div>
             <label asp-for="TrangThai"></label>
             <select asp-for="TrangThai">
