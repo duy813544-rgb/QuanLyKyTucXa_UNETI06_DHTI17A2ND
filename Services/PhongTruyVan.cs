@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DoAnNhom06.Services;
 
+
 public static class PhongTruyVan
 {
     public static IQueryable<PhongRow> KemSoCho(AppDbContext db) =>
