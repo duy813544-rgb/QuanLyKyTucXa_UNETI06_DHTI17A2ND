@@ -1,5 +1,4 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DoAnNhom06.Models;
@@ -83,7 +82,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<DangKyKTX>(e =>
         {
-            e.ToTable("DangKyKTX");
+            e.ToTable("DangKyKTX", tb => tb.UseSqlOutputClause(false));
             e.HasKey(x => x.MaDangKy);
             e.Property(x => x.MaSinhVien).HasMaxLength(20);
             e.Property(x => x.NgayDangKy).HasColumnType("date");
@@ -111,7 +110,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
         modelBuilder.Entity<PhanPhong>(e =>
         {
-            e.ToTable("PhanPhong");
+            e.ToTable("PhanPhong", tb => tb.UseSqlOutputClause(false));
             e.HasKey(x => x.MaPhanPhong);
             e.Property(x => x.NgayVao).HasColumnType("date");
             e.Property(x => x.NgayRa).HasColumnType("date");

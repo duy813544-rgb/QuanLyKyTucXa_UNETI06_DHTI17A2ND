@@ -1,5 +1,4 @@
-// Họ và tên: Vũ Lương Duy
-// Mã sinh viên: 23203100014
+
 using DoAnNhom06.Controllers;
 using DoAnNhom06.Models;
 using Microsoft.AspNetCore.Mvc;
